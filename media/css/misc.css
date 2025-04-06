@@ -1,0 +1,86 @@
+body{
+		font-family:calibri light, calibri, arial;
+		font-size: 14px; 
+	}
+	.body_container{
+		padding:10px 30px 30px 30px;
+		
+	}
+	.body_padding{
+		overflow:hidden;
+		overflow-x:scroll;
+		padding:10px;
+	}
+	.txt_100{
+		width:100px;
+	}
+	.txt_120{
+		width:120px;
+	}
+	.select_200{
+		width:200px;
+	}
+	.btn_120{
+		width:120px;
+	}
+	.btn_150{
+		width:150px;
+	}
+	.text_right{
+		text-align:right;
+	}
+	input.date_picker{
+		width:120px;
+		padding:3px;
+		border-radius:3px;
+		border:1px solid #bdbdbd;
+		background: url(../../shipment_new/images/icon-calendar.png) no-repeat scroll 100px 5px;
+		cursor:pointer;
+		
+	}
+
+/**----------------------------------------**/
+/**----------- X icon Checkbox ------------**/
+/**----------------------------------------**/
+input[type="checkbox"].x_icon{
+    -webkit-appearance: initial;
+    appearance: initial;
+    background: #F9C2C2;
+    width: 15px;
+    height: 15px;
+    border: 1px solid #bdbdbd;
+    position: relative;
+	top:1.2px;
+	border-radius:2px;
+}
+input[type="checkbox"].x_icon:checked {
+    background: red;
+}
+input[type="checkbox"].x_icon:checked:after {
+    /* Heres your symbol replacement */
+    content: url(../../media/img/x_icon_only_2.png); 
+    color: #fff;
+    /* The following positions my tick in the center, 
+     * but you could just overlay the entire box
+     * with a full after element with a background if you want to */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    /*
+     * If you want to fully change the check appearance, use the following:
+     * content: " ";
+     * width: 100%;
+     * height: 100%;
+     * background: blue;
+     * top: 0;
+     * left: 0;
+     */
+}
+
+.td_nowrap{
+	white-space:nowrap;
+}

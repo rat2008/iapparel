@@ -1,0 +1,55 @@
+
+/*===========================================*/
+/*======== FIXED TABLE HEADER COLUMN ========*/
+#table_ship_plan{
+	border-collapse: separate !important; 
+	border-spacing: 0.25px 0;
+	width: auto !important;
+}
+#table_ship_plan th.sticky {
+    max-width: 180px !important;
+    width: 180px; 
+    min-width: 180px;
+    border: 1px solid #bdbdbd !important;
+    background-color: #fff;
+	
+}
+
+#table_ship_plan thead tr>*:not(.sticky) {
+    z-index: 1;/*10*/
+}
+
+#table_ship_plan thead tr>*.sticky {
+    z-index: 51 !important;
+}
+
+#table_ship_plan thead th{
+	vertical-align:top;
+}
+#table_ship_plan th, #table_ship_plan td {
+  padding: 5px;
+  white-space:nowrap;
+  border: 1px solid #bdbdbd !important;
+  z-index:3;
+}
+
+#tbl_title td{
+	border:0px solid #bdbdbd !important;
+}
+#container_tbl{
+	overflow:scroll;
+	min-height:500px;
+	height:500px
+}
+.tb_buyer td{
+	cursor:pointer;
+}
+.tb_buyer tr:hover{
+	background-color:#f3f3f4;
+}
+.tb_buyer tr.selected {
+	background-color: lightblue;
+}
+.hidden_chk{
+	visibility: hidden;
+}

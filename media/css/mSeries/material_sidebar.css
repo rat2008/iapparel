@@ -1,0 +1,168 @@
+/*!
+ * Start Bootstrap - Simple Sidebar HTML Template (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+/* Toggle Styles */
+
+/*#wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+    padding-left: 200px;
+}*/
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 0px;
+    width: 0;
+    height: 100%;
+    margin-left: 0px;
+    overflow-y: auto;
+    background: #fff;
+	border-right:1px solid #bdbdbd;
+
+}
+
+/*#wrapper.toggled #sidebar-wrapper {
+    width: 250px;
+}*/
+
+/*#page-content-wrapper {
+    width: 95%;
+    padding: 10px;
+	border:0px solid #000;
+}*/
+
+/*#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -200px;
+}
+
+/* Sidebar Styles */
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 180px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-nav li {
+    text-indent: 12px;
+    line-height: 35px;
+}
+
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: #000;
+	
+}
+
+.active{
+	color:#e85356;
+	border-left:5px solid #e85356;
+	border-bottom:0px solid #e8e8e8;
+	background:#f9f9f9;
+}
+
+.sidebar-nav li a:hover {
+    text-decoration: none;
+    color: #000;
+    background: #e8e8e8;
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+    text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+    height: 40px;
+    font-size: 18px;
+    line-height: 18px;
+	border-bottom:1px solid #bdbdbd;
+}
+
+.sidebar-nav > .sidebar-brand a {
+    color: #383838;
+	font-weight:bold;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+    color: #000;
+    background: none;
+}
+
+.sidebar-nav > .sidebar-brand2 {
+    height: 25px;
+    font-size: 16px;
+    line-height: 24px;
+	/*background:#bdbdbd;*/
+	font-weight:bold;
+}
+
+.sidebar-nav > .sidebar-brand2 a {
+    color: #000;
+}
+
+.sidebar-nav > .sidebar-brand2 a:hover {
+    color: #000;
+    background: none;
+}
+
+.sidebar-nav > .sidebar-brand3 {
+    height: 35px;
+    font-size: 16px;
+    line-height: 40px;
+	/*background:#bdbdbd;*/
+	font-weight:bold;
+	border-top:1px solid #e8e8e8;
+}
+
+.sidebar-nav > .sidebar-brand3 a {
+    color: #000;
+}
+
+.sidebar-nav > .sidebar-brand3 a:hover {
+    color: #000;
+    background: none;
+}
+
+@media(min-width:10px) {
+    #wrapper {
+        padding-left: 250px;
+    }
+
+    #wrapper.toggled {
+        padding-left: 0;
+    }
+
+    #sidebar-wrapper {
+        width: 200px;
+		
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 0;
+    }
+
+    #page-content-wrapper {
+        padding: 15px;/*-20px-*/
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0;
+    }
+}
+

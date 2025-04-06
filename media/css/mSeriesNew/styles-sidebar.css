@@ -1,0 +1,189 @@
+div.col-sm-3{
+	width:201px;
+}
+ul.nav{
+	
+}
+.navbar-static-top {
+  margin-bottom:20px;
+}
+
+i{
+  font-size:16px;
+}
+
+.nav > li > a.content {
+	color:#787878;
+}
+  
+footer {
+  margin-top:20px;
+  padding-top:20px;
+  padding-bottom:20px;
+  background-color:#efefef;
+}
+a.main{
+	/*color:#e85356;*/
+	color:#383838;
+	font-weight:bold;
+}
+
+/* count indicator near icons */
+.nav>li .count {
+  position: absolute;
+  bottom: 12px;
+  right: 6px;
+  font-size: 9px;
+  background: rgba(51,200,51,0.55);
+  color: rgba(255,255,255,0.9);
+  line-height: 1em;
+  padding: 2px 4px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+}
+i.gly{
+	position:relative;
+	top:1px;
+	display:inline-block;
+	font-family:'Glyphicons Halflings';
+	font-style:normal;
+	font-weight:400;
+	line-height:1;
+	-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale
+}
+i.gly-chev-down:before{
+	font-family: FontAwesome;
+   content: "\f078";
+   display: inline-block;
+   padding-right: 3px;
+   vertical-align: middle;
+}
+
+i.gly-chev-right:before{
+	font-family: FontAwesome;
+   content: "\f054";
+   display: inline-block;
+   padding-right: 3px;
+   vertical-align: middle;
+}
+i.gly-home:before{
+	font-family: FontAwesome;
+   content: "\f015";
+   display: inline-block;
+   padding-right: 3px;
+   vertical-align: middle;
+}
+i.gly-tool:before{
+	font-family: FontAwesome;
+   content: "\f0ad";
+   display: inline-block;
+   padding-right: 3px;
+   vertical-align: middle;
+}
+i.gly-user:before{
+	font-family: FontAwesome;
+   content: "\f007";
+   display: inline-block;
+   padding-right: 3px;
+   vertical-align: middle;
+}
+i.gly-signOut:before{
+	font-family: FontAwesome;
+   content: "\f08b";
+   display: inline-block;
+   padding-right: 3px;
+   vertical-align: middle;
+}
+i.gly-envelope:before{
+	font-family: FontAwesome;
+   content: "\f003";
+}
+i.gly-cog:before{
+	font-family: FontAwesome;
+	content: "\f013";
+}
+i.gly-comment:before{
+	font-family: FontAwesome;
+	content: "\f075";
+}
+i.gly-flag:before{
+	font-family: FontAwesome;
+	content: "\f024";
+}
+i.gly-exclamation-sign:before{
+	font-family: FontAwesome;
+	content: "\f06a";
+}
+i.gly-off:before{
+	font-family: FontAwesome;
+	content: "\f011";
+}
+i.gly-file:before{
+	font-family: FontAwesome;
+	content: "\f016";
+}
+i.gly-plus:before{
+	font-family: FontAwesome;
+	content: "\f067";
+}
+i.gly-pencil:before{
+	font-family: FontAwesome;
+	content: "\f040";
+}
+i.gly-clock:before{
+	font-family: FontAwesome;
+	content: "\f017";
+}
+i.gly-trash:before{
+	font-family: FontAwesome;
+	content: "\f014";
+}
+i.gly-folder-open:before{
+	font-family: FontAwesome;
+	content: "\f115";
+}
+i.gly-keyboard:before{
+	font-family: FontAwesome;
+	content: "\f11c";
+}
+i.gly-report:before{
+	font-family: FontAwesome;
+	content: "\f02f";
+}
+i.gly-check-square:before{
+	font-family: FontAwesome;
+	content: "\f14a";
+}
+i.gly-circle-up:before{
+	font-family: FontAwesome;
+	content: "\f139";
+}
+i.gly-circle-down:before{
+	font-family: FontAwesome;
+	content: "\f13a";
+}
+i.gly-circle-left:before{
+	font-family: FontAwesome;
+	content: "\f137";
+}
+i.gly-circle-right:before{
+	font-family: FontAwesome;
+	content: "\f138";
+}
+i.gly-table:before{
+	font-family: FontAwesome;
+	content: "\f0ce";
+}
+i.gly-bars:before{
+	font-family: FontAwesome;
+	content: "\f0c9";
+}
+input.txt_nano{
+	width:30px;
+	padding:5px;
+	border-radius:3px;
+	border:1px solid #bdbdbd;
+}

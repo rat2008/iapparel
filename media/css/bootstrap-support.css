@@ -1,0 +1,45 @@
+body, html{
+	font-size:12px;
+}
+
+.table_support th{
+	padding:0px;
+}
+
+.tbltitle_lc{
+	border:1px solid #bdbdbd;
+	padding:10px;
+	background-color:#f3f3f4;
+}
+
+.tbltitle_0{
+	background-color:#0094ff;color:white;padding:3px;
+}
+
+.tbltitle_1{
+	background:#FC6E51;color:white;padding:3px;
+}
+
+.tbltitle_2{
+	background:#A0D458;color:white;padding:3px;
+}
+
+.tbltitle_3{
+	background:#F6BB42;color:white;padding:3px;
+}
+
+.tbltitle_4{
+	background-color:#3BAFDA;color:white;padding:3px;
+}
+
+.tbltitle_5{
+	background:#8CC152;color:white;padding:3px;
+}
+
+.header_title{
+	margin-top:18px;
+}
+
+input.txt_md{
+	width:170px;font-size:12px;
+}

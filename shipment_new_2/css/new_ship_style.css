@@ -1,0 +1,62 @@
+table.tb_info{
+	width:100%;
+	font-size:13px;
+	padding-top:5px;
+}
+
+table.tb_detail td, table.tb_detail tr th{
+	text-align:center;
+}
+
+b.subTitle{
+	font-size:13px;
+}
+
+td.td_head{
+	text-align:right;
+	font-weight:bold;
+}
+
+td.topcolortd{
+	text-align:center;
+}
+
+input.txt_medium{
+	padding:6px;
+	border-radius:3px;
+	width:220px;
+	border:1px solid #bdbdbd;
+}
+input.datepicker2{
+	width:220px;
+	padding:6px;
+	border-radius:3px;
+	border:1px solid #bdbdbd;
+	background: url(../images/icon-calendar.png) no-repeat scroll 200px 6px;
+	cursor:pointer;
+	
+}
+input.icheckbox_flat-blue{
+	width:18px;
+	height:18px;
+}
+select.select_medium{
+	width:220px;
+	border:1px solid #bdbdbd;
+	padding:6px;
+	border-radius:3px;
+	color:#969696;
+	text-align:left;
+}
+a.url_link{
+	cursor:pointer;
+}
+th.sub_title{
+	cursor:pointer;
+	white-space:nowrap;
+}
+
+.large.tooltip-inner {
+	max-width: 250px;
+	width: 250px;
+}

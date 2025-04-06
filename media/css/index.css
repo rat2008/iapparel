@@ -1,0 +1,179 @@
+/* navigation */
+
+/* top navigation */
+@font-face {
+    font-family: myFirstFont;
+    src: url(../fonts/Titillium.otf);
+	font-weight: normal;
+	font-style: normal;
+}
+
+body {
+	background: #e6e6e6;
+}
+
+.headTitle, .crmHeader{
+     font-family:calibri light, calibri, arial;
+	 font-weight:300;
+	 text-transform: uppercase;
+}
+
+
+
+span.companyname
+{
+/*margin-left:15px;
+margin-right:15px;*/
+}
+
+
+.gn-menu-main,
+.gn-menu-main ul {
+		margin: 0;
+		padding: 0;
+		background: #fff;
+		color: #5f6f81;
+		list-style: none;
+		text-transform: none;
+		font-weight: 300;
+		font-family: calibri light, calibri, Arial, sans-serif;
+		/* font-family: Arial, sans-serif; */
+		line-height: 25px;
+		/*position:fixed;*/
+		overflow-x: hidden;
+		overflow-y: auto;
+		
+}
+
+.gn-menu-main {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		font-size: 12px;
+		border-bottom: 1px solid #aab1b0;
+}
+
+.gn-menu-main a {
+		display: block;
+		height: 100%;
+		color: black;
+		text-align: right;
+		text-decoration: none;
+		cursor: pointer;
+}
+
+.gn-menu-main .companyname  {
+		display: block;
+		/*height: 110%;*/
+		color: #5f6f81;
+}
+
+.no-touch .gn-menu-main a:hover,
+.no-touch .gn-menu li.gn-search-item:hover,
+.no-touch .gn-menu li.gn-search-item:hover a {
+		background: #006bb6;
+		color: #fff;
+}
+
+/*.gn-menu-main > li {
+		display: block;
+		float: left;
+		height: 100%;
+		border-right: 1px solid #696969;
+		text-align: center;
+}*/
+
+
+/*.gn-menu-main > li:last-child {
+		float: right;
+		border-right: none;
+		border-left: 1px solid #c6d0da;
+}
+
+.gn-menu-main > li:nth-last-child(2) {
+		float: right;
+		border-right: none;
+		border-left: 1px solid #c6d0da;
+		
+}
+
+.gn-menu-main > li:nth-last-child(3) {
+		float: right;
+		border-right: none;
+		border-left: 1px solid #c6d0da;
+		
+}
+
+.gn-menu-main > li:nth-last-child(4) {
+        display: block;
+		float: right;
+		border-right: none;
+		border-left: 1px solid #c6d0da;
+		
+}*/
+
+.gn-menu-main > li:nth-child(4) > :hover {
+background-color:#DB1139;
+color: white;		
+}
+
+.gn-menu-main > li > a {
+		padding: 0 30px;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		font-weight: bold;
+}
+
+.gn-menu-main li ul li {
+	width: 100%;
+	height: 100%;
+	font-size: 12px;
+	border-bottom: 1px solid #aab1b0;
+}
+
+.gn-menu-main li ul li a.accordion {
+	background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 5px 8px;
+    width: 100%;
+    border-bottom: 1px solid #aaaaaa;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+a.accordion.active, a.accordion:hover {
+    background-color: #ddd;
+    color: white;
+}
+
+div.panel {
+    background-color: white;
+    font-size: 13px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+div.panel a {
+	padding: 3px 8px;
+	text-indent: 10px;
+	text-align: left;
+}
+
+@media screen and (max-width: 422px) { 
+	.gn-menu-wrapper.gn-open-all {
+			-webkit-transform: translateX(0px);
+			-moz-transform: translateX(0px);
+			transform: translateX(0px);
+			width: 100%;
+	}
+
+	.gn-menu-wrapper.gn-open-all .gn-scroller {
+			width: 130%
+	}
+}

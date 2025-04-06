@@ -1,0 +1,60 @@
+.sn input[type="checkbox"]
+{
+vertical-align: bottom;
+position: relative;
+top: -1px;
+overflow: hidden;
+}
+	   
+#menuname
+{
+padding-right:25px;
+padding-top:-50px;
+}
+	   
+#screenname
+{
+width:290px;       
+}
+	   
+ul
+{
+list-style-type:none;
+}
+	   
+#permission
+{
+display: inline-block;   
+float: left;
+margin: 0;
+padding: 0;
+}
+	   
+.title label {
+display: block; width: 95px;
+text-align:center;
+}
+
+.click
+{
+margin-left: 37px;
+margin-right: 37px;
+}
+	   
+/* table{
+text-align: left;
+margin-top:-34px;
+margin-left: 250px;
+margin-right: auto;
+width:550px;
+}*/
+	   
+.title
+{
+text-align: left;
+margin-top:34px;
+margin-left: 405px;
+margin-right: auto;
+width:550px;
+}
+	   

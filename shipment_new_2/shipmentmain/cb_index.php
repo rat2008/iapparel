@@ -1,0 +1,397 @@
+<?php
+include("../../lock.php");
+include("../../function/misc.php");
+include_once("../../cf/cs_cb.php");
+
+$handle_misc = new misc($conn);
+
+$mainurl = $handle_misc->getAPIURL();
+
+
+$method = "POST";
+$url    = $mainurl . "/";
+$data   = array();
+
+$arr_result = $handle_misc->funcCallAPI($method, $url, $data);
+
+$_misc = new misc($conn);
+
+$buyer_po_header = new cs_cb($conn, $_misc);
+$i = 0;
+$invID = $_GET['invID'];
+$row_buyer_po = $buyer_po_header->select_buyer_po($_GET['invID']);
+
+$last_cost_head_id = $handle_misc->funcMaxID('tblbuyer_invoice_payment_cost_head', "INVCHID");
+
+// var_dump('<pre>');
+// 	var_dump($last_cost_head_id);
+// 	die();
+if (!empty($_POST)) {
+	var_dump('<pre>');
+	var_dump($_POST);
+	die();
+}
+
+?>
+<!DOCTYPE html>
+<html>
+
+<head>
+	<?php include '../../media/medialink.php'; ?>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
+	<style>
+		.container {
+			font-size: 12px;
+		}
+
+		.form-control {
+			font-size: 12px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<h3>Order Form</h3>
+		<form id="order-form" action="../../cf/func_cb.php" method="POST">
+			<div id="order-sections">
+				<?php foreach ($row_buyer_po as $index => $buyer_po) {
+					$row_shipping_marking = $buyer_po_header->select_shipping_marking($_GET['invID'], $buyer_po['shipmentpriceID']);
+					$row_color = $buyer_po_header->select_po_color($_GET['invID'], $buyer_po['shipmentpriceID']);
+					$row_cost_head = $buyer_po_header->select_cost_head($_GET['invID'], $buyer_po['shipmentpriceID']);
+					$cost_head_colors = [];
+					$INVCHID = 0;
+
+					if (!empty($row_cost_head)) {
+						$cost_head_colors = explode(',', $row_cost_head[0]['colorID']);
+					}
+
+					$shipping_marking = '';
+					if (isset($row_shipping_marking)) {
+						$shipping_marking = $row_shipping_marking[0]['shipping_marking'];
+					}
+				?>
+					<div class="card card-default order-section" data-section="<?= $buyer_po['shipmentpriceID'] ?>">
+						<div class="card-header">
+							<table>
+								<tr>
+									<td><button type="button" class="btn btn-primary" onclick="addSection(this, <?= $INVCHID ?>,<?= $buyer_po['shipmentpriceID'] ?>)">Add Section</button></td>
+									<th>PO#:</th>
+									<td><?= $buyer_po['GTN_buyerpo'] ?></td>
+									<th>ITEM/STYLE#:</th>
+									<td><?= $buyer_po['GTN_styleno'] ?></td>
+								</tr>
+							</table>
+						</div>
+						<div class="card-body" id="cost_head_<?= $INVCHID ?>">
+							<?php foreach ($row_cost_head as $cost_head) {
+								$color_qty = 0;
+								$color_id = [];
+								$INVCHID = $cost_head['INVCHID'];
+
+								$color_id = explode(',', $cost_head['colorID']);
+
+								foreach ($row_color as $color) {
+									if (in_array($color['colorID'], $color_id)) {
+										$color_qty = $color_qty + $color['qty'];
+									}
+								}
+							?>
+								<div class="cost-head-section">
+									<table>
+										<tr>
+											<td>
+												<button type="button" class="btn btn-danger btn-xs pull-right" onclick="removeSection(this)">&times;</button>
+											</td>
+											<td>
+												<strong>Color:</strong>
+											</td>
+											<td style="width:30%">
+												<select name="color_array[<?= $index ?>][]" data-INVCHID="<?= $INVCHID ?>" data-invID="<?= $_GET['invID'] ?>" data-shipmentpriceID="<?= $buyer_po['shipmentpriceID'] ?>" class="form-control color-select" multiple>
+													<?php foreach ($row_color as $color_option) {
+														$selected_color = in_array($color_option['colorID'], explode(',', $cost_head['colorID'])) ? 'selected' : '' ?>
+														<option value="<?= $color_option['colorID'] ?>" <?= $selected_color ?>><?= $color_option['color'] ?></option>
+													<?php } ?>
+												</select>
+												<input type="text" name="color[]" class="color-string" value="<?= $cost_head['colorID'] ?>">
+											</td>
+											<td>
+												<strong>Description:</strong>
+											</td>
+											<td style="width:50%">
+												<input name="shipping_marking[]" class="form-control" value="<?= $shipping_marking ?>">
+											</td>
+											<td>
+												<input name="ch_new_head[]" value="n">
+												<input name="ch_invchid[]" value="<?= $cost_head['INVCHID'] ?>">
+												<input name="ch_invID[]" value="<?= $_GET['invID'] ?>">
+												<input name="ch_shipmentpriceID[]" value="<?= $buyer_po['shipmentpriceID'] ?>">
+											</td>
+										</tr>
+									</table>
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th><button type="button" class="btn btn-success btn-xs" onclick="addRow(this, <?= $buyer_po['shipmentpriceID'] ?>,<?= $INVCHID ?>)">+</button></th>
+												<th>Item Description</th>
+												<th>Qty</th>
+												<th>Unit Price</th>
+												<th>Total Amount</th>
+												<th>NNWCTNS (KG)</th>
+												<th>Total NNW (KG)</th>
+											</tr>
+										</thead>
+										<tbody class="items">
+											<?php
+											$row_cost_detail = $buyer_po_header->select_cost_detail($INVCHID);
+
+											foreach ($row_cost_detail as $cost_detail) { ?>
+												<tr>
+													<td>
+														<button type="button" class="btn btn-danger btn-xs" onclick="removeRow(this)">&times;</button>
+													</td>
+													<td><input type="text" name="item_description[]" class="form-control" value="<?= $cost_detail['item_desc'] ?>"></td>
+													<td><input type="text" name="qty[]" class="form-control qty-<?= $INVCHID ?>" value="<?= $color_qty ?>" readonly></td>
+													<td><input type="text" name="unit_price[]" class="form-control unit-price" oninput="calculateTotal(this)" value="<?= $cost_detail['unitprice'] ?>"></td>
+													<td class="total-amount">1,480</td>
+													<td><input type="text" name="nnwctns[]" class="form-control" value="<?= $cost_detail['ctn_qty'] ?>" readonly></td>
+													<td><input type="text" name="total_nnw[]" class="form-control" value="<?= $cost_detail['total_nnw'] ?>" readonly></td>
+													<td>
+														<input name="cd_new_detail[]" value="n">
+														<input name="cd_cost_detail_id[]" value="<?= $cost_detail['ID'] ?>">
+														<input name="cd_invchid[]" value="<?= $INVCHID ?>">
+														<input name="cd_shipmentpriceID[]" value="<?= $buyer_po['shipmentpriceID'] ?>">
+													</td>
+												</tr>
+											<?php
+											}
+											if (empty($row_cost_detail)) { ?>
+												<tr>
+													<td>
+														<button type="button" class="btn btn-danger btn-xs" onclick="removeRow(this)">&times;</button>
+													</td>
+													<td><input type="text" name="item_description[]" class="form-control"></td>
+													<td><input type="text" name="qty[]" class="form-control qty-<?= $INVCHID ?>" value="<?= $color_qty ?>" readonly></td>
+													<td><input type="text" name="unit_price[]" class="form-control unit-price" oninput="calculateTotal(this)"></td>
+													<td class="total-amount">1,480</td>
+													<td><input type="text" name="nnwctns[]" class="form-control" readonly></td>
+													<td><input type="text" name="total_nnw[]" class="form-control" readonly></td>
+													<td>
+														<input name="cd_new_detail[]" value="y">
+														<input name="cd_cost_detail_id[]" value="">
+														<input name="cd_invchid[]" value="<?= $INVCHID ?>">
+														<input name="cd_shipmentpriceID[]" value="<?= $buyer_po['shipmentpriceID'] ?>">
+													</td>
+												</tr>
+											<?php } ?>
+										</tbody>
+									</table>
+								</div>
+							<?php } ?>
+							<?php if (empty($row_cost_head)) {
+								$INVCHID = $last_cost_head_id; ?>
+								<div class="cost-head-section">
+									<table>
+										<tr>
+											<td>
+												<button type="button" class="btn btn-danger btn-xs pull-right" onclick="removeSection(this)">&times;</button>
+											</td>
+											<td>
+												<strong>Color:</strong>
+											</td>
+											<td style="width:30%">
+												<select name="color_array[<?= $index ?>][]" class="form-control color-select" data-INVCHID="<?= $INVCHID ?>" data-invID="<?= $_GET['invID'] ?>" data-shipmentpriceID="<?= $buyer_po['shipmentpriceID'] ?>" multiple>
+													<?php foreach ($row_color as $color) {
+														$select = in_array($color['colorID'], $cost_head_colors) ? 'selected' : '' ?>
+														<option value="<?= $color['colorID'] ?>" <?= $select ?>><?= $color['color'] ?></option>
+													<?php } ?>
+												</select>
+												<input type="text" name="color[]" class="color-string" value="<?= implode(',', $cost_head_colors) ?>">
+											</td>
+											<td>
+												<strong>Description:</strong>
+											</td>
+											<td style="width:50%">
+												<input name="shipping_marking[]" class="form-control" value="<?= $shipping_marking ?>">
+											</td>
+											<td>
+												<input name="ch_new_head[]" value="y">
+												<input name="ch_invchid[]" value="<?= $INVCHID ?>">
+												<input name="ch_invID[]" value="<?= $_GET['invID'] ?>">
+												<input name="ch_shipmentpriceID[]" value="<?= $buyer_po['shipmentpriceID'] ?>">
+											</td>
+										</tr>
+									</table>
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th><button type="button" class="btn btn-success btn-xs" onclick="addRow(this, <?= $buyer_po['shipmentpriceID'] ?>,<?= $INVCHID ?>)">+</button></th>
+												<th>Item Description</th>
+												<th>Qty</th>
+												<th>Unit Price</th>
+												<th>Total Amount</th>
+												<th>NNWCTNS (KG)</th>
+												<th>Total NNW (KG)</th>
+											</tr>
+										</thead>
+										<tbody class="items">
+											<tr>
+												<td>
+													<button type="button" class="btn btn-danger btn-xs" onclick="removeRow(this)">&times;</button>
+												</td>
+												<td><input type="text" name="item_description[]" class="form-control"></td>
+												<td><input type="text" name="qty[]" class="form-control qty-<?= $INVCHID ?>" readonly></td>
+												<td><input type="text" name="unit_price[]" class="form-control unit-price" oninput="calculateTotal(this)"></td>
+												<td class="total-amount">1,480</td>
+												<td><input type="text" name="nnwctns[]" class="form-control" readonly></td>
+												<td><input type="text" name="total_nnw[]" class="form-control" readonly></td>
+												<td>
+													<input name="cd_new_detail[]" value="y">
+													<input name="cd_cost_detail_id[]" value="">
+													<input name="cd_invchid[]" value="<?= $INVCHID ?>">
+													<input name="cd_shipmentpriceID[]" value="<?= $buyer_po['shipmentpriceID'] ?>">
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<?php $INVCHID++; ?>
+							<?php } ?>
+						</div>
+					</div>
+				<?php $i++;
+				} ?>
+			</div>
+			<div style="float:right">
+				<button type="submit" class="btn btn-success">Submit</button>
+			</div>
+		</form>
+	</div>
+</body>
+
+</html>
+<script>
+	$(document).ready(function() {
+		$('.color-select').select2();
+	});
+
+	let last_invchid = <?= $INVCHID ?>;
+
+	function addSection(btn, INVCHID, shipmentpriceID) {
+		// sectionCount++;
+		let js_shipmentpriceID = shipmentpriceID;
+		$.ajax({
+			url: "../../ajax/ajax_cb.php",
+			method: "POST",
+			data: {
+				INVCHID: last_invchid,
+				shipmentpriceID: shipmentpriceID,
+
+				// last_invchid: last_invchid,
+				invID: <?= $invID ?>,
+				type: 'addSection'
+			},
+			success: function(data) {
+
+				last_invchid++;
+				$(btn).closest('.card').find('.card-body').append(data);
+				// $('#cost_head_' + INVCHID).append(data);
+				// $('#spid'+shipmentpriceID).val(js_cost_detail_id)
+				$('.color-select').select2();
+			}
+		})
+
+		// $('#cost_head_'+INVCHID).append(sectionHtml);
+		// $('.color-select').select2();
+	}
+
+	function addRow(btn, shipmentpriceID, INVCHID) {
+		$.ajax({
+			url: "../../ajax/ajax_cb.php",
+			method: "POST",
+			data: {
+				INVCHID: INVCHID,
+				shipmentpriceID: shipmentpriceID,
+
+				// sectionCount: sectionCount,
+				invID: <?= $invID ?>,
+				type: 'addRow'
+			},
+			success: function(data) {
+				$(btn).closest('table').find('.items').append(data);
+				updateAllColorSelects();
+			}
+		})
+	}
+
+	function removeSection(btn) {
+		$(btn).closest('.cost-head-section').remove();
+	}
+
+	function removeRow(btn) {
+		$(btn).closest('tr').remove();
+	}
+
+	function calculateTotal(input) {
+		let unitPrice = parseFloat($(input).val()) || 0;
+		let totalAmount = unitPrice * 740;
+		$(input).closest('tr').find('.total-amount').text(totalAmount);
+	}
+
+	$(document).on('change', '.color-select', function() {
+		const selected = $(this).val(); // e.g. ["Red", "Green"]
+
+		const colorStr = selected ? selected.join(',') : '';
+
+		$(this).closest('td').find('.color-string').val(colorStr);
+
+		let invID = $(this).attr("data-invID");
+		let INVCHID = $(this).attr("data-INVCHID");
+		let shipmentpriceID = $(this).attr("data-shipmentpriceID");
+
+		$.ajax({
+			url: "../../ajax/ajax_cb.php",
+			method: "POST",
+			data: {
+				invID: invID,
+				INVCHID: INVCHID,
+				shipmentpriceID: shipmentpriceID,
+				color_id: colorStr,
+				type: 'getQty'
+			},
+			success: function(data) {
+				$('.qty-' + INVCHID).val(data);
+			}
+		})
+	});
+
+	function updateAllColorSelects() {
+		$('.color-select').each(function() {
+			const selected = $(this).val();
+			const colorStr = selected ? selected.join(',') : '';
+
+			$(this).closest('td').find('.color-string').val(colorStr);
+
+			let invID = $(this).attr("data-invID");
+			let INVCHID = $(this).attr("data-INVCHID");
+			let shipmentpriceID = $(this).attr("data-shipmentpriceID");
+
+			$.ajax({
+				url: "../../ajax/ajax_cb.php",
+				method: "POST",
+				data: {
+					invID: invID,
+					INVCHID: INVCHID,
+					shipmentpriceID: shipmentpriceID,
+					color_id: colorStr,
+					type: 'getQty'
+				},
+				success: function(data) {
+					$('.qty-' + INVCHID).val(data);
+				}
+			});
+		});
+	}
+</script>

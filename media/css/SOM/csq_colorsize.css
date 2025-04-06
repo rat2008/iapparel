@@ -1,0 +1,301 @@
+*{
+margin:0;
+padding:0;
+}
+body,html{
+font-family:  Arial, Calibri, sans-serif;
+background: #f8f8f8;
+font-size:13px;
+height:100%;
+margin-top:30px;
+padding:0px;	
+}
+
+.leftdiv{
+max-width: 16.9%;
+padding: 20px 12px 10px 33px;
+font: 13px Arial, Helvetica, sans-serif;
+background-color:white;
+width:85%;
+position: absolute;
+top: 0;
+bottom: auto;
+margin-top:7.2%;
+margin-left:-1.6%;
+height: 100%;
+position: fixed;
+}
+
+.rightdiv0{
+float:right;
+background-position: 50px 100px; 
+width:55%;
+margin-top:3.6%;
+margin-right:22%;
+z-index:-20;
+}
+
+.rightdiv1{
+float:right;
+background-position: 50px 100px; 
+width:55%;
+height:200px;
+background:#fff;
+border:1px solid #bdbdbd;
+overflow-y:scroll;
+overflow-x:hidden;
+margin-top:3%;
+margin-right:22%;
+z-index:-20;
+}
+
+.rightdiv2{
+float:right;
+background-position: 50px 100px; 
+width:55%;
+height:200px;
+margin-right:22%;
+margin-top:2%;
+}
+
+div#container{
+min-height:100%;
+position:relative;
+width:100%;
+background-color:#f3f3f4;
+}
+
+.container{
+float:right;
+width:100%;
+}
+.container > header {
+margin-top: -5%;
+padding: 1em;
+text-align: left;
+background: #F5F5F5;
+width:100%;
+position:fixed;   /*--fixed and bring front */
+z-index: 1;       /*--fixed and bring front */		
+}
+
+.container > header h1 {
+font-size: 2.125em;
+line-height: 1.3;
+margin: 0;
+font-weight: 500;
+}
+
+.container > header span {
+display: block;
+font-size: 60%;
+opacity: 0.7;
+padding: 0 0 0.6em 0.1em;
+}
+
+th{
+font-size:12px;
+}
+
+table td{
+text-align:right;
+font-size:10px;
+padding:0px;	
+}
+
+.container .mainContent{
+padding-top:25px;
+padding-left:25px;
+}
+
+.container label {
+display: block;
+margin: 0px 0px 0px;
+}
+
+.container label>span {
+float: left;
+width: 60px;
+text-align: left;
+padding-right: 15px;
+margin-top: 10px;
+color: #333;
+font-family: Arial, sans-serif;
+font-weight: bold;
+}
+
+	
+.container input[type="text"]
+, .container input[type="password"]
+, .container textarea{
+border: 1px solid #D3D3D3;
+color: black;
+height: 18px;
+margin-bottom: 8px;
+margin-right: 6px;
+margin-top: 2px;
+outline: 0 none;
+padding: 4px 8px;
+width: 48%;
+border-radius: 2px;
+-webkit-border-radius: 2px;
+-moz-border-radius: 2px;
+font: normal 14px/14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.rightdiv0_span{
+margin-right:6%;
+}
+
+.selectColor{
+margin-right:6%;
+}
+
+.intoTable{
+margin-left:100px;
+width:8%;
+
+}
+
+
+input.txt_long{
+width:300px;
+padding:5px;
+border-radius:3px;
+border:1px solid #bdbdbd;
+}
+input.txt_short{
+width:80px;
+padding:5px;
+border-radius:3px;
+border:1px solid #bdbdbd;
+}
+
+input.txt_long{
+width:130px;
+padding:5px;
+border-radius:3px;
+border:1px solid #bdbdbd;
+}
+
+#dataTable .colorCode{
+width:212px;
+margin-top:7px;
+height:30px;
+border-radius:3px;
+border:1px solid #bdbdbd;
+}
+
+.myDynamicTable table tr td input[type="number"]{
+width:70px;
+margin:2px;
+height:30px;
+border-radius:3px;
+border:1px solid #bdbdbd;
+}
+
+.myDynamicTable table tr td .amountTotal{
+width:120px;
+margin:2px;
+height:30px;
+border-radius:3px;
+border:1px solid #bdbdbd;
+}
+
+.myDynamicTable table tr td .totalText{
+width:120px;
+font-size:20px;
+margin:2px;
+height:30px;
+border-radius:3px;
+border:1px solid #bdbdbd;
+}
+
+
+#create{
+margin-bottom:10px;
+}
+
+#submit{
+margin-top:10px;
+}
+
+.totalText
+{
+font-size:12px;
+}
+
+.colorTable {
+margin-top:25px;
+visibility: hidden;
+}
+
+.colorTable_exist {
+margin-top:25px;
+}
+
+
+#create{
+visibility: hidden;
+}
+
+#create_exist{
+
+}
+
+#submit{
+visibility: hidden;
+}
+
+select{
+width:212px;
+padding:5px;
+border-radius:3px;
+border:1px solid #bdbdbd;
+}
+
+select.select_short{
+width:140px;
+padding:5px;
+border-radius:3px;
+border:1px solid #bdbdbd;
+}
+
+textarea.txtarea_long{
+width:300px;
+border-radius:3px;
+border:1px solid #bdbdbd;
+overflow-x:hidden;
+padding:5px;
+}
+
+/* add, delete and generate table button*/
+.adddel_btn, .deletebtn_class {
+text-decoration:none;
+border: none;
+padding: 8px 15px 8px 15px;
+background: #0EBEC7;
+color: #fff;
+box-shadow: 1px 1px 4px #DADADA;
+-moz-box-shadow: 1px 1px 4px #DADADA;
+-webkit-box-shadow: 1px 1px 4px #DADADA;
+border-radius: 3px;
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+cursor:pointer;
+margin-top:12px;
+}
+
+.adddel_btn:hover{
+background: #A8ADA8;
+color: #fff;
+cursor:pointer;
+}
+
+
+
+
+

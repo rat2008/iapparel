@@ -1,0 +1,105 @@
+[15-Mar-2025 16:13:12 Asia/Singapore] PHP Fatal error:  Uncaught exception 'PHPExcel_Exception' with message 'Maximum 31 characters allowed in sheet title.' in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php:472
+Stack trace:
+#0 /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php(841): PHPExcel_Worksheet::_checkSheetTitle('009795 (Men&amp...')
+#1 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(1420): PHPExcel_Worksheet->setTitle('009795 (Men&amp...')
+#2 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(796): excelClass->getBuyerInvoicePackingListTemplate('8483', 0, Object(PHPExcel))
+#3 {main}
+  thrown in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php on line 472
+[15-Mar-2025 16:13:21 Asia/Singapore] PHP Fatal error:  Uncaught exception 'PHPExcel_Exception' with message 'Maximum 31 characters allowed in sheet title.' in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php:472
+Stack trace:
+#0 /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php(841): PHPExcel_Worksheet::_checkSheetTitle('009795 (Men&amp...')
+#1 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(1420): PHPExcel_Worksheet->setTitle('009795 (Men&amp...')
+#2 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(796): excelClass->getBuyerInvoicePackingListTemplate('8483', 0, Object(PHPExcel))
+#3 {main}
+  thrown in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php on line 472
+[15-Mar-2025 16:13:30 Asia/Singapore] PHP Fatal error:  Uncaught exception 'PHPExcel_Exception' with message 'Maximum 31 characters allowed in sheet title.' in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php:472
+Stack trace:
+#0 /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php(841): PHPExcel_Worksheet::_checkSheetTitle('009795 (Men&amp...')
+#1 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(1420): PHPExcel_Worksheet->setTitle('009795 (Men&amp...')
+#2 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(796): excelClass->getBuyerInvoicePackingListTemplate('8483', 0, Object(PHPExcel))
+#3 {main}
+  thrown in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php on line 472
+[15-Mar-2025 16:13:43 Asia/Singapore] PHP Fatal error:  Uncaught exception 'PHPExcel_Exception' with message 'Maximum 31 characters allowed in sheet title.' in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php:472
+Stack trace:
+#0 /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php(841): PHPExcel_Worksheet::_checkSheetTitle('009795 (Men&amp...')
+#1 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(1420): PHPExcel_Worksheet->setTitle('009795 (Men&amp...')
+#2 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(796): excelClass->getBuyerInvoicePackingListTemplate('8483', 0, Object(PHPExcel))
+#3 {main}
+  thrown in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php on line 472
+[15-Mar-2025 16:13:51 Asia/Singapore] PHP Fatal error:  Uncaught exception 'PHPExcel_Exception' with message 'Maximum 31 characters allowed in sheet title.' in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php:472
+Stack trace:
+#0 /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php(841): PHPExcel_Worksheet::_checkSheetTitle('009795 (Men&amp...')
+#1 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(1420): PHPExcel_Worksheet->setTitle('009795 (Men&amp...')
+#2 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(796): excelClass->getBuyerInvoicePackingListTemplate('8483', 0, Object(PHPExcel))
+#3 {main}
+  thrown in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php on line 472
+[15-Mar-2025 16:15:03 Asia/Singapore] PHP Fatal error:  Uncaught exception 'PHPExcel_Exception' with message 'Maximum 31 characters allowed in sheet title.' in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php:472
+Stack trace:
+#0 /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php(841): PHPExcel_Worksheet::_checkSheetTitle('009795 (Men&amp...')
+#1 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(1420): PHPExcel_Worksheet->setTitle('009795 (Men&amp...')
+#2 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(796): excelClass->getBuyerInvoicePackingListTemplate('8483', 0, Object(PHPExcel))
+#3 {main}
+  thrown in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php on line 472
+[15-Mar-2025 16:17:00 Asia/Singapore] PHP Fatal error:  Uncaught exception 'PHPExcel_Exception' with message 'Maximum 31 characters allowed in sheet title.' in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php:472
+Stack trace:
+#0 /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php(841): PHPExcel_Worksheet::_checkSheetTitle('009795 (Men&amp...')
+#1 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(1420): PHPExcel_Worksheet->setTitle('009795 (Men&amp...')
+#2 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(796): excelClass->getBuyerInvoicePackingListTemplate('8483', 0, Object(PHPExcel))
+#3 {main}
+  thrown in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php on line 472
+[15-Mar-2025 16:17:07 Asia/Singapore] PHP Fatal error:  Uncaught exception 'PHPExcel_Exception' with message 'Maximum 31 characters allowed in sheet title.' in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php:472
+Stack trace:
+#0 /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php(841): PHPExcel_Worksheet::_checkSheetTitle('009795 (Men&amp...')
+#1 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(1420): PHPExcel_Worksheet->setTitle('009795 (Men&amp...')
+#2 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(796): excelClass->getBuyerInvoicePackingListTemplate('8483', 0, Object(PHPExcel))
+#3 {main}
+  thrown in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php on line 472
+[15-Mar-2025 16:18:24 Asia/Singapore] PHP Fatal error:  Uncaught exception 'PHPExcel_Exception' with message 'Maximum 31 characters allowed in sheet title.' in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php:472
+Stack trace:
+#0 /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php(841): PHPExcel_Worksheet::_checkSheetTitle('009795 (Men&amp...')
+#1 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(1420): PHPExcel_Worksheet->setTitle('009795 (Men&amp...')
+#2 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(796): excelClass->getBuyerInvoicePackingListTemplate('8483', 0, Object(PHPExcel))
+#3 {main}
+  thrown in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php on line 472
+[15-Mar-2025 16:32:00 Asia/Singapore] PHP Fatal error:  Uncaught exception 'PHPExcel_Exception' with message 'Maximum 31 characters allowed in sheet title.' in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php:472
+Stack trace:
+#0 /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php(841): PHPExcel_Worksheet::_checkSheetTitle('009795 (Men&amp...')
+#1 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(1420): PHPExcel_Worksheet->setTitle('009795 (Men&amp...')
+#2 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(796): excelClass->getBuyerInvoicePackingListTemplate('8483', 0, Object(PHPExcel))
+#3 {main}
+  thrown in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php on line 472
+[15-Mar-2025 16:32:10 Asia/Singapore] PHP Fatal error:  Uncaught exception 'PHPExcel_Exception' with message 'Maximum 31 characters allowed in sheet title.' in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php:472
+Stack trace:
+#0 /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php(841): PHPExcel_Worksheet::_checkSheetTitle('009795 (Men&amp...')
+#1 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(1420): PHPExcel_Worksheet->setTitle('009795 (Men&amp...')
+#2 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(796): excelClass->getBuyerInvoicePackingListTemplate('8483', 0, Object(PHPExcel))
+#3 {main}
+  thrown in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php on line 472
+[15-Mar-2025 16:32:15 Asia/Singapore] PHP Fatal error:  Uncaught exception 'PHPExcel_Exception' with message 'Maximum 31 characters allowed in sheet title.' in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php:472
+Stack trace:
+#0 /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php(841): PHPExcel_Worksheet::_checkSheetTitle('009795 (Men&amp...')
+#1 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(1420): PHPExcel_Worksheet->setTitle('009795 (Men&amp...')
+#2 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(796): excelClass->getBuyerInvoicePackingListTemplate('8483', 0, Object(PHPExcel))
+#3 {main}
+  thrown in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php on line 472
+[15-Mar-2025 16:33:23 Asia/Singapore] PHP Fatal error:  Uncaught exception 'PHPExcel_Exception' with message 'Maximum 31 characters allowed in sheet title.' in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php:472
+Stack trace:
+#0 /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php(841): PHPExcel_Worksheet::_checkSheetTitle('009795 (Men&amp...')
+#1 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(1420): PHPExcel_Worksheet->setTitle('009795 (Men&amp...')
+#2 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(796): excelClass->getBuyerInvoicePackingListTemplate('8483', 0, Object(PHPExcel))
+#3 {main}
+  thrown in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php on line 472
+[15-Mar-2025 16:33:27 Asia/Singapore] PHP Fatal error:  Uncaught exception 'PHPExcel_Exception' with message 'Maximum 31 characters allowed in sheet title.' in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php:472
+Stack trace:
+#0 /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php(841): PHPExcel_Worksheet::_checkSheetTitle('009795 (Men&amp...')
+#1 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(1420): PHPExcel_Worksheet->setTitle('009795 (Men&amp...')
+#2 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(796): excelClass->getBuyerInvoicePackingListTemplate('8483', 0, Object(PHPExcel))
+#3 {main}
+  thrown in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php on line 472
+[15-Mar-2025 16:33:32 Asia/Singapore] PHP Fatal error:  Uncaught exception 'PHPExcel_Exception' with message 'Maximum 31 characters allowed in sheet title.' in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php:472
+Stack trace:
+#0 /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php(841): PHPExcel_Worksheet::_checkSheetTitle('009795 (Men&amp...')
+#1 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(1420): PHPExcel_Worksheet->setTitle('009795 (Men&amp...')
+#2 /home/apparelezi/public_html/iapparelintl/shipment_new_2/shipmentmain/buyer_template/buyer_noble_excel.php(796): excelClass->getBuyerInvoicePackingListTemplate('8483', 0, Object(PHPExcel))
+#3 {main}
+  thrown in /home/apparelezi/public_html/iapparelintl/phpexcel/Classes/PHPExcel/Worksheet.php on line 472

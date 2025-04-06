@@ -73,9 +73,9 @@ if ($_POST) {
 				"INVCHID" => $ch_invchid[$cost_head_index],                 // required for WHERE condition
 				"shipmentpriceID" => $ch_shipmentpriceID[$cost_head_index],
 				"colorID" => $color[$cost_head_index],
-				"del" => 0,
-				"delBy" => null,
-				"delDate" => null
+				// "del" => 0,
+				// "delBy" => null,
+				// "delDate" => null
 			];
 			var_dump('<pre>');
 			var_dump($data);

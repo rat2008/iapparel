@@ -115,7 +115,9 @@ if (!empty($_POST)) {
 														<option value="<?= $color_option['colorID'] ?>" <?= $selected_color ?>><?= $color_option['color'] ?></option>
 													<?php } ?>
 												</select>
-												<input type="hidden" name="color[]" class="color-string" value="<?= $cost_head['colorID'] ?>">
+												<input type="text" name="color[]" class="color-string" value="<?= $cost_head['colorID'] ?>">
+												<input type="text" name="" class="ctn" value="">
+												<input type="text" name="" class="nnw" value="">
 											</td>
 											<td>
 												<strong>Description:</strong>
@@ -131,7 +133,7 @@ if (!empty($_POST)) {
 											</td>
 										</tr>
 									</table>
-									<table class="table table-bordered">
+									<table class="table table-bordered cost_detail_row">
 										<thead>
 											<tr>
 												<th><button type="button" class="btn btn-success btn-xs" onclick="addRow(this, <?= $buyer_po['shipmentpriceID'] ?>,<?= $INVCHID ?>)">+</button></th>
@@ -156,8 +158,8 @@ if (!empty($_POST)) {
 													<td><input type="text" name="qty[]" class="form-control qty-<?= $INVCHID ?>" value="<?= $color_qty ?>" readonly></td>
 													<td><input type="text" name="unit_price[]" class="form-control unit-price" data-INVCHID="<?= $INVCHID ?>" oninput="calculateTotal(this, <?= $INVCHID ?>)" value="<?= $cost_detail['unitprice'] ?>"></td>
 													<td class="total-amount"><?= $color_qty * $cost_detail['unitprice'] ?></td>
-													<td><input type="text" name="nnwctns[]" class="form-control" value="<?= $cost_detail['ctn_qty'] ?>" readonly></td>
-													<td><input type="text" name="total_nnw[]" class="form-control" value="<?= $cost_detail['total_nnw'] ?>" readonly></td>
+													<td><input type="text" name="nnwctns[]" class="form-control nnwctns" value="<?= $cost_detail['ctn_qty'] ?>" readonly></td>
+													<td><input type="text" name="total_nnw[]" class="form-control total_nnw" value="<?= $cost_detail['total_nnw'] ?>" readonly></td>
 													<td>
 														<input name="cd_new_detail[]" value="n">
 														<input name="cd_cost_detail_id[]" value="<?= $cost_detail['ID'] ?>">
@@ -175,9 +177,9 @@ if (!empty($_POST)) {
 													<td><input type="text" name="item_description[]" class="form-control"></td>
 													<td><input type="text" name="qty[]" class="form-control qty-<?= $INVCHID ?>" value="<?= $color_qty ?>" readonly></td>
 													<td><input type="text" name="unit_price[]" class="form-control unit-price" data-INVCHID="<?= $INVCHID ?>" oninput="calculateTotal(this, <?= $INVCHID ?>)"></td>
-													<td class="total-amount">1,480</td>
-													<td><input type="text" name="nnwctns[]" class="form-control" readonly></td>
-													<td><input type="text" name="total_nnw[]" class="form-control" readonly></td>
+													<td class="total-amount">0</td>
+													<td><input type="text" name="nnwctns[]" class="form-control nnwctns" readonly></td>
+													<td><input type="text" name="total_nnw[]" class="form-control total_nnw" readonly></td>
 													<td>
 														<input name="cd_new_detail[]" value="y">
 														<input name="cd_cost_detail_id[]" value="">
@@ -208,7 +210,9 @@ if (!empty($_POST)) {
 														<option value="<?= $color['colorID'] ?>" <?= $select ?>><?= $color['color'] ?></option>
 													<?php } ?>
 												</select>
-												<input type="hidden" name="color[]" class="color-string" value="<?= implode(',', $cost_head_colors) ?>">
+												<input type="text" name="color[]" class="color-string" value="<?= implode(',', $cost_head_colors) ?>">
+												<input type="text" name="" class="ctn" value="">
+												<input type="text" name="" class="nnw" value="">
 											</td>
 											<td>
 												<strong>Description:</strong>
@@ -224,7 +228,7 @@ if (!empty($_POST)) {
 											</td>
 										</tr>
 									</table>
-									<table class="table table-bordered">
+									<table class="table table-bordered cost_detail_row">
 										<thead>
 											<tr>
 												<th><button type="button" class="btn btn-success btn-xs" onclick="addRow(this, <?= $buyer_po['shipmentpriceID'] ?>,<?= $INVCHID ?>)">+</button></th>
@@ -244,9 +248,9 @@ if (!empty($_POST)) {
 												<td><input type="text" name="item_description[]" class="form-control"></td>
 												<td><input type="text" name="qty[]" class="form-control qty-<?= $INVCHID ?>" readonly></td>
 												<td><input type="text" name="unit_price[]" class="form-control unit-price" data-INVCHID="<?= $INVCHID ?>" oninput="calculateTotal(this, <?= $INVCHID ?>)"></td>
-												<td class="total-amount">1,480</td>
-												<td><input type="text" name="nnwctns[]" class="form-control" readonly></td>
-												<td><input type="text" name="total_nnw[]" class="form-control" readonly></td>
+												<td class="total-amount">0</td>
+												<td><input type="text" name="nnwctns[]" class="form-control nnwctns" readonly></td>
+												<td><input type="text" name="total_nnw[]" class="form-control total_nnw" readonly></td>
 												<td>
 													<input name="cd_new_detail[]" value="y">
 													<input name="cd_cost_detail_id[]" value="">
@@ -322,6 +326,7 @@ if (!empty($_POST)) {
 			success: function(data) {
 				$(btn).closest('table').find('.items').append(data);
 				updateAllColorSelects();
+				calculateAllNNWCTNS();
 			}
 		})
 	}
@@ -339,12 +344,14 @@ if (!empty($_POST)) {
 		let qty = parseFloat($('.qty-' + INVCHID).val()) || 0;
 		let totalAmount = unitPrice * qty;
 		$(input).closest('tr').find('.total-amount').text(totalAmount.toFixed(2));
+		calculateAllNNWCTNS();
 	}
 
 	$(document).on('change', '.color-select', function() {
 		const selected = $(this).val(); // e.g. ["Red", "Green"]
 
 		const colorStr = selected ? selected.join(',') : '';
+		let obj = $(this);
 
 		$(this).closest('td').find('.color-string').val(colorStr);
 
@@ -363,8 +370,12 @@ if (!empty($_POST)) {
 				type: 'getQty'
 			},
 			success: function(data) {
-				$('.qty-' + INVCHID).val(data);
+				data = JSON.parse(data);
+				$('.qty-' + INVCHID).val(data['color_qty']);
+				obj.closest('td').find('.ctn').val(data['total_ctn']);
+				obj.closest('td').find('.nnw').val(data['total_nnw']);
 				calculateAllTotal();
+				calculateAllNNWCTNS();
 			}
 		})
 	});
@@ -376,6 +387,7 @@ if (!empty($_POST)) {
 
 			$(this).closest('td').find('.color-string').val(colorStr);
 
+			let obj = $(this);
 			let invID = $(this).attr("data-invID");
 			let INVCHID = $(this).attr("data-INVCHID");
 			let shipmentpriceID = $(this).attr("data-shipmentpriceID");
@@ -391,7 +403,10 @@ if (!empty($_POST)) {
 					type: 'getQty'
 				},
 				success: function(data) {
-					$('.qty-' + INVCHID).val(data);
+					data = JSON.parse(data);
+					$('.qty-' + INVCHID).val(data['color_qty']);
+					obj.closest('td').find('.ctn').val(data['total_ctn']);
+					obj.closest('td').find('.nnw').val(data['total_nnw']);
 				}
 			});
 		});
@@ -405,6 +420,49 @@ if (!empty($_POST)) {
 			let totalAmount = unitPrice * qty;
 
 			$(this).closest('tr').find('.total-amount').text(totalAmount.toFixed(2));
+		});
+
+		calculateAllNNWCTNS();
+	}
+
+	function calculateAllNNWCTNS() {
+		let unit_price_array = [];
+		let ratio_array = [];
+		let total_ctn = 0;
+		let total_nnw = 0;
+		let total_unit_price = 0;
+
+		$('.cost_detail_row').each(function() {
+			total_ctn = $(this).closest('.cost-head-section').find('.ctn').val();
+			total_nnw = $(this).closest('.cost-head-section').find('.nnw').val();
+			total_ctn = parseFloat(total_ctn);
+			total_nnw = parseFloat(total_nnw);
+
+			$(this).find('.unit-price').each(function() {
+				let unitPrice = parseFloat($(this).val()) || 0;
+				let INVCHID = $(this).attr("data-INVCHID");
+				let qty = parseFloat($('.qty-' + INVCHID).val()) || 0;
+				let totalAmount = unitPrice * qty;
+				total_unit_price = total_unit_price + unitPrice;
+
+				unit_price_array.push(unitPrice);
+			});
+			
+			unit_price_array.forEach(function(item, index, arr) {
+				let temp_unit_price = item || 0;
+				ratio_array[index] = parseFloat(item) / total_unit_price;
+			});
+			
+			$(this).find('.nnwctns').each(function(index) {
+				let ratio = ratio_array[index]||0;
+				let ctn = ratio * total_ctn;
+				$(this).val(ctn.toFixed(2));
+			});
+			$(this).find('.total_nnw').each(function(index) {
+				let ratio = ratio_array[index]||0;
+				let nnw = ratio * total_nnw;
+				$(this).val(nnw.toFixed(2));
+			});
 		});
 	}
 </script>

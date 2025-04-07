@@ -126,10 +126,10 @@ if (!empty($_POST)) {
 												<input name="shipping_marking[]" class="form-control" value="<?= $shipping_marking ?>">
 											</td>
 											<td>
-												<input type="hidden" name="ch_new_head[]" value="n">
-												<input type="hidden" name="ch_invchid[]" value="<?= $cost_head['INVCHID'] ?>">
-												<input type="hidden" name="ch_invID[]" value="<?= $_GET['invID'] ?>">
-												<input type="hidden" name="ch_shipmentpriceID[]" value="<?= $buyer_po['shipmentpriceID'] ?>">
+												<input type="text" name="ch_new_head[]" value="n">
+												<input type="text" name="ch_invchid[]" value="<?= $cost_head['INVCHID'] ?>">
+												<input type="text" name="ch_invID[]" value="<?= $_GET['invID'] ?>">
+												<input type="text" name="ch_shipmentpriceID[]" value="<?= $buyer_po['shipmentpriceID'] ?>">
 											</td>
 										</tr>
 									</table>
@@ -285,6 +285,7 @@ if (!empty($_POST)) {
 
 	function addSection(btn, INVCHID, shipmentpriceID) {
 		// sectionCount++;
+		last_invchid++;
 		let js_shipmentpriceID = shipmentpriceID;
 		$.ajax({
 			url: "../../ajax/ajax_cb.php",
@@ -298,8 +299,6 @@ if (!empty($_POST)) {
 				type: 'addSection'
 			},
 			success: function(data) {
-
-				last_invchid++;
 				$(btn).closest('.card').find('.card-body').append(data);
 				// $('#cost_head_' + INVCHID).append(data);
 				// $('#spid'+shipmentpriceID).val(js_cost_detail_id)
@@ -419,6 +418,8 @@ if (!empty($_POST)) {
 			let qty = parseFloat($('.qty-' + INVCHID).val()) || 0;
 			let totalAmount = unitPrice * qty;
 
+			console.log(qty);
+
 			$(this).closest('tr').find('.total-amount').text(totalAmount.toFixed(2));
 		});
 
@@ -426,13 +427,13 @@ if (!empty($_POST)) {
 	}
 
 	function calculateAllNNWCTNS() {
-		let unit_price_array = [];
-		let ratio_array = [];
-		let total_ctn = 0;
-		let total_nnw = 0;
-		let total_unit_price = 0;
-
 		$('.cost_detail_row').each(function() {
+			let unit_price_array = [];
+			let ratio_array = [];
+			let total_ctn = 0;
+			let total_nnw = 0;
+			let total_unit_price = 0;
+
 			total_ctn = $(this).closest('.cost-head-section').find('.ctn').val();
 			total_nnw = $(this).closest('.cost-head-section').find('.nnw').val();
 			total_ctn = parseFloat(total_ctn);

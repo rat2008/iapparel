@@ -23,7 +23,7 @@ $row_color = $buyer_po_header->select_po_color($_POST['invID'], $shipmentpriceID
 $row_shipping_marking = $buyer_po_header->select_shipping_marking($_POST['invID'], $shipmentpriceID);
 $shipping_marking = '';
 
-if (isset($row_shipping_marking)) {
+if (isset($row_shipping_marking[0])) {
 	$shipping_marking = $row_shipping_marking[0]['shipping_marking'];
 }
 
@@ -32,7 +32,7 @@ if ($type == 'getQty') {
 	$bicid_array = [];
 	$total_ctn = 0;
 	$total_nnw = 0;
-
+	
 	foreach ($row_color as $color) {
 		if (in_array($color['colorID'], $color_id)) {
 			$color_qty = $color_qty + $color['qty'];
@@ -61,7 +61,7 @@ if ($type == 'addRow') {
 		</td>
 		<td><input type="text" name="item_description[]" class="form-control"></td>
 		<td><input type="text" name="qty[]" class="form-control qty-<?= $INVCHID ?>" readonly></td>
-		<td><input type="text" name="unit_price[]" class="form-control unit-price" oninput="calculateTotal(this)"></td>
+		<td><input type="text" name="unit_price[]" data-INVCHID="<?= $INVCHID ?>" class="form-control unit-price" oninput="calculateTotal(this, <?= $INVCHID ?>)"></td>
 		<td class="total-amount">0</td>
 		<td><input type="text" name="nnwctns[]" class="form-control nnwctns" readonly></td>
 		<td><input type="text" name="total_nnw[]" class="form-control total_nnw" readonly></td>
@@ -74,8 +74,8 @@ if ($type == 'addRow') {
 	</tr>
 <?php }
 if ($type == 'addSection') { ?>
-	<div class="cost-head-section">
-		<table>
+	<div class="cost-head-section border p-2 mb-2">
+		<table class="mb-2">
 			<tr>
 				<td>
 					<button type="button" class="btn btn-danger btn-xs pull-right" onclick="removeSection(this)">&times;</button>
@@ -84,7 +84,7 @@ if ($type == 'addSection') { ?>
 					<strong>Color:</strong>
 				</td>
 				<td style="width:30%">
-					<select name="color_array[][]" class="form-control color-select" multiple>
+					<select name="color_array[][]" data-INVCHID="<?= $INVCHID ?>" data-invID="<?= $_POST['invID'] ?>" data-shipmentpriceID="<?= $shipmentpriceID ?>" class="form-control color-select" multiple>
 						<?php foreach ($row_color as $color) { ?>
 							<option value="<?= $color['colorID'] ?>"><?= $color['color'] ?></option>
 						<?php } ?>
@@ -107,7 +107,7 @@ if ($type == 'addSection') { ?>
 				</td>
 			</tr>
 		</table>
-		<table class="table table-bordered">
+		<table class="table table-bordered cost_detail_row">
 			<thead>
 				<tr>
 					<th><button type="button" class="btn btn-success btn-xs" onclick="addRow(this, <?= $shipmentpriceID ?>,<?= $INVCHID ?>)">+</button></th>
@@ -130,7 +130,7 @@ if ($type == 'addSection') { ?>
 						</td>
 						<td><input type="text" name="item_description[]" class="form-control" value="<?= $cost_detail['item_desc'] ?>"></td>
 						<td><input type="text" name="qty[]" class="form-control qty-<?= $INVCHID ?>" value="<?= $color_qty ?>" readonly></td>
-						<td><input type="text" name="unit_price[]" class="form-control unit-price" oninput="calculateTotal(this)" value="<?= $cost_detail['unitprice'] ?>"></td>
+						<td><input type="text" name="unit_price[]" class="form-control unit-price" data-INVCHID="<?= $INVCHID ?>" oninput="calculateTotal(this, <?= $INVCHID ?>)" value="<?= $cost_detail['unitprice'] ?>"></td>
 						<td class="total-amount">0</td>
 						<td><input type="text" name="nnwctns[]" class="form-control nnwctns" value="<?= $cost_detail['ctn_qty'] ?>" readonly></td>
 						<td><input type="text" name="total_nnw[]" class="form-control total_nnw" value="<?= $cost_detail['total_nnw'] ?>" readonly></td>
@@ -150,7 +150,7 @@ if ($type == 'addSection') { ?>
 						</td>
 						<td><input type="text" name="item_description[]" class="form-control"></td>
 						<td><input type="text" name="qty[]" class="form-control qty-<?= $INVCHID ?>" value="<?= $color_qty ?>" readonly></td>
-						<td><input type="text" name="unit_price[]" class="form-control unit-price" oninput="calculateTotal(this)"></td>
+						<td><input type="text" name="unit_price[]" class="form-control unit-price" data-INVCHID="<?= $INVCHID ?>" oninput="calculateTotal(this, <?= $INVCHID ?>)"></td>
 						<td class="total-amount">0</td>
 						<td><input type="text" name="nnwctns[]" class="form-control nnwctns" readonly></td>
 						<td><input type="text" name="total_nnw[]" class="form-control total_nnw" readonly></td>

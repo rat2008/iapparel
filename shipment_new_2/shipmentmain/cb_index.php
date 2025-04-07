@@ -57,6 +57,8 @@ if (!empty($_POST)) {
 		<h3>Order Form</h3>
 		<form id="order-form" action="../../cf/func_cb.php" method="POST">
 			<div id="order-sections">
+				<input name="delete_cost_head_id" type="text">
+				<input name="delete_cost_detail_id" type="text">
 				<?php foreach ($row_buyer_po as $index => $buyer_po) {
 					$row_shipping_marking = $buyer_po_header->select_shipping_marking($_GET['invID'], $buyer_po['shipmentpriceID']);
 					$row_color = $buyer_po_header->select_po_color($_GET['invID'], $buyer_po['shipmentpriceID']);
@@ -98,12 +100,16 @@ if (!empty($_POST)) {
 										$color_qty = $color_qty + $color['qty'];
 									}
 								}
+
+								if (!empty($cost_head['item_desc'])) {
+									$shipping_marking = $cost_head['item_desc'];
+								}
 							?>
 								<div class="cost-head-section border p-2 mb-2">
 									<table class="mb-2">
 										<tr>
 											<td>
-												<button type="button" class="btn btn-danger btn-xs pull-right" onclick="removeSection(this)">&times;</button>
+												<button type="button" class="btn btn-danger btn-xs pull-right" onclick="removeSection(this, <?= $INVCHID ?>)">&times;</button>
 											</td>
 											<td>
 												<strong>Color:</strong>
@@ -116,8 +122,8 @@ if (!empty($_POST)) {
 													<?php } ?>
 												</select>
 												<input type="text" name="color[]" class="color-string" value="<?= $cost_head['colorID'] ?>">
-												<input type="text" name="" class="ctn" value="">
-												<input type="text" name="" class="nnw" value="">
+												<input type="text" name="" class="ctn" value="0">
+												<input type="text" name="" class="nnw" value="0">
 											</td>
 											<td>
 												<strong>Description:</strong>
@@ -152,7 +158,7 @@ if (!empty($_POST)) {
 											foreach ($row_cost_detail as $cost_detail) { ?>
 												<tr>
 													<td>
-														<button type="button" class="btn btn-danger btn-xs" onclick="removeRow(this)">&times;</button>
+														<button type="button" class="btn btn-danger btn-xs" onclick="removeRow(this, <?= $cost_detail['ID'] ?>)">&times;</button>
 													</td>
 													<td><input type="text" name="item_description[]" class="form-control" value="<?= $cost_detail['item_desc'] ?>"></td>
 													<td><input type="text" name="qty[]" class="form-control qty-<?= $INVCHID ?>" value="<?= $color_qty ?>" readonly></td>
@@ -330,11 +336,21 @@ if (!empty($_POST)) {
 		})
 	}
 
-	function removeSection(btn) {
+	function removeSection(btn, INVCHID) {
+		if (INVCHID) {
+			temp = $('input[name="delete_cost_head_id"]').val();
+			let deleteStr = INVCHID + ',' + temp;
+			$('input[name="delete_cost_head_id"]').val(deleteStr);
+		}
 		$(btn).closest('.cost-head-section').remove();
 	}
 
-	function removeRow(btn) {
+	function removeRow(btn, ID) {
+		if (ID) {
+			temp = $('input[name="delete_cost_detail_id"]').val();
+			let deleteStr = ID + ',' + temp;
+			$('input[name="delete_cost_detail_id"]').val(deleteStr);
+		}
 		$(btn).closest('tr').remove();
 	}
 
@@ -448,19 +464,19 @@ if (!empty($_POST)) {
 
 				unit_price_array.push(unitPrice);
 			});
-			
+
 			unit_price_array.forEach(function(item, index, arr) {
 				let temp_unit_price = item || 0;
 				ratio_array[index] = parseFloat(item) / total_unit_price;
 			});
-			
+
 			$(this).find('.nnwctns').each(function(index) {
-				let ratio = ratio_array[index]||0;
+				let ratio = ratio_array[index] || 0;
 				let ctn = ratio * total_ctn;
 				$(this).val(ctn.toFixed(2));
 			});
 			$(this).find('.total_nnw').each(function(index) {
-				let ratio = ratio_array[index]||0;
+				let ratio = ratio_array[index] || 0;
 				let nnw = ratio * total_nnw;
 				$(this).val(nnw.toFixed(2));
 			});

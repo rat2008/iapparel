@@ -90,8 +90,8 @@ if ($type == 'addSection') { ?>
 						<?php } ?>
 					</select>
 					<input type="text" name="color[]" class="color-string" value="">
-					<input type="text" name="" class="ctn" value="">
-					<input type="text" name="" class="nnw" value="">
+					<input type="text" name="" class="ctn" value="0">
+					<input type="text" name="" class="nnw" value="0">
 				</td>
 				<td>
 					<strong>Description:</strong>

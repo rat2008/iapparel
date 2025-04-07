@@ -9,6 +9,7 @@ public $INVCHID;
 public $invID;
 public $shipmentpriceID;
 public $colorID;
+public $item_desc;
 public $del = 0;
 public $delBy = NULL;
 public $delDate = NULL;
@@ -22,7 +23,7 @@ public function __construct($conn, $handle_misc){
 
 public function create(){
     $query = ' INSERT INTO '.$this->table_name.' SET 
-    INVCHID=:INVCHID, invID=:invID, shipmentpriceID=:shipmentpriceID, colorID=:colorID, del=:del, delBy=:delBy, delDate=:delDate';
+    INVCHID=:INVCHID, invID=:invID, shipmentpriceID=:shipmentpriceID, colorID=:colorID, item_desc=:item_desc, del=:del, delBy=:delBy, delDate=:delDate';
 
     // prepare query
     $stmt = $this->conn->prepare($query);
@@ -33,6 +34,7 @@ public function create(){
     $stmt->bindParam(":invID", $this->invID);
     $stmt->bindParam(":shipmentpriceID", $this->shipmentpriceID);
     $stmt->bindParam(":colorID", $this->colorID);
+	$stmt->bindParam(":item_desc", $this->item_desc);
     $stmt->bindParam(":del", $this->del);
     $stmt->bindParam(":delBy", $this->delBy);
     $stmt->bindParam(":delDate", $this->delDate);

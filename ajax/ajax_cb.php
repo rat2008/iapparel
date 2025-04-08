@@ -32,7 +32,7 @@ if ($type == 'getQty') {
 	$bicid_array = [];
 	$total_ctn = 0;
 	$total_nnw = 0;
-	
+
 	foreach ($row_color as $color) {
 		if (in_array($color['colorID'], $color_id)) {
 			$color_qty = $color_qty + $color['qty'];
@@ -64,12 +64,12 @@ if ($type == 'addRow') {
 		<td><input type="text" name="unit_price[]" data-INVCHID="<?= $INVCHID ?>" class="form-control unit-price" oninput="calculateTotal(this, <?= $INVCHID ?>)"></td>
 		<td class="total-amount">0</td>
 		<td><input type="text" name="nnwctns[]" class="form-control nnwctns" readonly></td>
-		<td><input type="text" name="total_nnw[]" class="form-control total_nnw" readonly></td>
 		<td>
-			<input name="cd_new_detail[]" value="y">
-			<input name="cd_cost_detail_id[]" value="">
-			<input name="cd_invchid[]" value="<?= $INVCHID ?>">
-			<input name="cd_shipmentpriceID[]" value="<?= $shipmentpriceID ?>">
+			<input type="text" name="total_nnw[]" class="form-control total_nnw" readonly>
+			<input type="hidden" name="cd_new_detail[]" value="y">
+			<input type="hidden" name="cd_cost_detail_id[]" value="">
+			<input type="hidden" name="cd_invchid[]" value="<?= $INVCHID ?>">
+			<input type="hidden" name="cd_shipmentpriceID[]" value="<?= $shipmentpriceID ?>">
 		</td>
 	</tr>
 <?php }
@@ -89,9 +89,9 @@ if ($type == 'addSection') { ?>
 							<option value="<?= $color['colorID'] ?>"><?= $color['color'] ?></option>
 						<?php } ?>
 					</select>
-					<input type="text" name="color[]" class="color-string" value="">
-					<input type="text" name="" class="ctn" value="0">
-					<input type="text" name="" class="nnw" value="0">
+					<input type="hidden" name="color[]" class="color-string" value="">
+					<input type="hidden" name="" class="ctn" value="0">
+					<input type="hidden" name="" class="nnw" value="0">
 				</td>
 				<td>
 					<strong>Description:</strong>
@@ -100,10 +100,10 @@ if ($type == 'addSection') { ?>
 					<input name="shipping_marking[]" class="form-control" value="<?= $shipping_marking ?>">
 				</td>
 				<td>
-					<input name="ch_new_head[]" value="y">
-					<input name="ch_invchid[]" value="<?= $INVCHID ?>">
-					<input name="ch_invID[]" value="<?= $_POST['invID'] ?>">
-					<input name="ch_shipmentpriceID[]" value="<?= $shipmentpriceID ?>">
+					<input type="hidden" name="ch_new_head[]" value="y">
+					<input type="hidden" name="ch_invchid[]" value="<?= $INVCHID ?>">
+					<input type="hidden" name="ch_invID[]" value="<?= $_POST['invID'] ?>">
+					<input type="hidden" name="ch_shipmentpriceID[]" value="<?= $shipmentpriceID ?>">
 				</td>
 			</tr>
 		</table>
@@ -133,12 +133,12 @@ if ($type == 'addSection') { ?>
 						<td><input type="text" name="unit_price[]" class="form-control unit-price" data-INVCHID="<?= $INVCHID ?>" oninput="calculateTotal(this, <?= $INVCHID ?>)" value="<?= $cost_detail['unitprice'] ?>"></td>
 						<td class="total-amount">0</td>
 						<td><input type="text" name="nnwctns[]" class="form-control nnwctns" value="<?= $cost_detail['ctn_qty'] ?>" readonly></td>
-						<td><input type="text" name="total_nnw[]" class="form-control total_nnw" value="<?= $cost_detail['total_nnw'] ?>" readonly></td>
 						<td>
-							<input name="cd_new_detail[]" value="n">
-							<input name="cd_cost_detail_id[]" value="<?= $cost_detail['ID'] ?>">
-							<input name="cd_invchid[]" value="<?= $INVCHID ?>">
-							<input name="cd_shipmentpriceID[]" value="<?= $shipmentpriceID ?>">
+							<input type="text" name="total_nnw[]" class="form-control total_nnw" value="<?= $cost_detail['total_nnw'] ?>" readonly>
+							<input type="hidden" name="cd_new_detail[]" value="n">
+							<input type="hidden" name="cd_cost_detail_id[]" value="<?= $cost_detail['ID'] ?>">
+							<input type="hidden" name="cd_invchid[]" value="<?= $INVCHID ?>">
+							<input type="hidden" name="cd_shipmentpriceID[]" value="<?= $shipmentpriceID ?>">
 						</td>
 					</tr>
 				<?php
@@ -153,12 +153,12 @@ if ($type == 'addSection') { ?>
 						<td><input type="text" name="unit_price[]" class="form-control unit-price" data-INVCHID="<?= $INVCHID ?>" oninput="calculateTotal(this, <?= $INVCHID ?>)"></td>
 						<td class="total-amount">0</td>
 						<td><input type="text" name="nnwctns[]" class="form-control nnwctns" readonly></td>
-						<td><input type="text" name="total_nnw[]" class="form-control total_nnw" readonly></td>
 						<td>
-							<input name="cd_new_detail[]" value="y">
-							<input name="cd_cost_detail_id[]" value="">
-							<input name="cd_invchid[]" value="<?= $INVCHID ?>">
-							<input name="cd_shipmentpriceID[]" value="<?= $shipmentpriceID ?>">
+							<input type="text" name="total_nnw[]" class="form-control total_nnw" readonly>
+							<input type="hidden" name="cd_new_detail[]" value="y">
+							<input type="hidden" name="cd_cost_detail_id[]" value="">
+							<input type="hidden" name="cd_invchid[]" value="<?= $INVCHID ?>">
+							<input type="hidden" name="cd_shipmentpriceID[]" value="<?= $shipmentpriceID ?>">
 						</td>
 					</tr>
 				<?php } ?>

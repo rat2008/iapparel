@@ -75,7 +75,7 @@ if (!empty($_POST)) {
 						$shipping_marking = $row_shipping_marking[0]['shipping_marking'];
 					}
 				?>
-					<div class="card card-default order-section" data-section="<?= $buyer_po['shipmentpriceID'] ?>">
+					<div class="card card-default order-section mb-2" data-section="<?= $buyer_po['shipmentpriceID'] ?>">
 						<div class="card-header">
 							<table>
 								<tr>
@@ -115,27 +115,25 @@ if (!empty($_POST)) {
 												<strong>Color:</strong>
 											</td>
 											<td style="width:30%">
-												<select name="color_array[<?= $index ?>][]" data-INVCHID="<?= $INVCHID ?>" data-invID="<?= $_GET['invID'] ?>" data-shipmentpriceID="<?= $buyer_po['shipmentpriceID'] ?>" class="form-control color-select" multiple>
+												<select name="color_array[<?= $index ?>][]" data-INVCHID="<?= $INVCHID ?>" data-invID="<?= $_GET['invID'] ?>" data-shipmentpriceID="<?= $buyer_po['shipmentpriceID'] ?>" class="form-control color-select" readonly multiple>
 													<?php foreach ($row_color as $color_option) {
 														$selected_color = in_array($color_option['colorID'], explode(',', $cost_head['colorID'])) ? 'selected' : '' ?>
 														<option value="<?= $color_option['colorID'] ?>" <?= $selected_color ?>><?= $color_option['color'] ?></option>
 													<?php } ?>
 												</select>
-												<input type="text" name="color[]" class="color-string" value="<?= $cost_head['colorID'] ?>">
-												<input type="text" name="" class="ctn" value="0">
-												<input type="text" name="" class="nnw" value="0">
+												<input type="hidden" name="color[]" class="color-string" value="<?= $cost_head['colorID'] ?>">
+												<input type="hidden" name="" class="ctn" value="0">
+												<input type="hidden" name="" class="nnw" value="0">
 											</td>
 											<td>
 												<strong>Description:</strong>
 											</td>
 											<td style="width:50%">
 												<input name="shipping_marking[]" class="form-control" value="<?= $shipping_marking ?>">
-											</td>
-											<td>
-												<input type="text" name="ch_new_head[]" value="n">
-												<input type="text" name="ch_invchid[]" value="<?= $cost_head['INVCHID'] ?>">
-												<input type="text" name="ch_invID[]" value="<?= $_GET['invID'] ?>">
-												<input type="text" name="ch_shipmentpriceID[]" value="<?= $buyer_po['shipmentpriceID'] ?>">
+												<input type="hidden" name="ch_new_head[]" value="n">
+												<input type="hidden" name="ch_invchid[]" value="<?= $cost_head['INVCHID'] ?>">
+												<input type="hidden" name="ch_invID[]" value="<?= $_GET['invID'] ?>">
+												<input type="hidden" name="ch_shipmentpriceID[]" value="<?= $buyer_po['shipmentpriceID'] ?>">
 											</td>
 										</tr>
 									</table>
@@ -165,12 +163,12 @@ if (!empty($_POST)) {
 													<td><input type="text" name="unit_price[]" class="form-control unit-price" data-INVCHID="<?= $INVCHID ?>" oninput="calculateTotal(this, <?= $INVCHID ?>)" value="<?= $cost_detail['unitprice'] ?>"></td>
 													<td class="total-amount"><?= $color_qty * $cost_detail['unitprice'] ?></td>
 													<td><input type="text" name="nnwctns[]" class="form-control nnwctns" value="<?= $cost_detail['ctn_qty'] ?>" readonly></td>
-													<td><input type="text" name="total_nnw[]" class="form-control total_nnw" value="<?= $cost_detail['total_nnw'] ?>" readonly></td>
 													<td>
-														<input name="cd_new_detail[]" value="n">
-														<input name="cd_cost_detail_id[]" value="<?= $cost_detail['ID'] ?>">
-														<input name="cd_invchid[]" value="<?= $INVCHID ?>">
-														<input name="cd_shipmentpriceID[]" value="<?= $buyer_po['shipmentpriceID'] ?>">
+														<input type="text" name="total_nnw[]" class="form-control total_nnw" value="<?= $cost_detail['total_nnw'] ?>" readonly>
+														<input type="hidden" name="cd_new_detail[]" value="n">
+														<input type="hidden" name="cd_cost_detail_id[]" value="<?= $cost_detail['ID'] ?>">
+														<input type="hidden" name="cd_invchid[]" value="<?= $INVCHID ?>">
+														<input type="hidden" name="cd_shipmentpriceID[]" value="<?= $buyer_po['shipmentpriceID'] ?>">
 													</td>
 												</tr>
 											<?php
@@ -185,12 +183,11 @@ if (!empty($_POST)) {
 													<td><input type="text" name="unit_price[]" class="form-control unit-price" data-INVCHID="<?= $INVCHID ?>" oninput="calculateTotal(this, <?= $INVCHID ?>)"></td>
 													<td class="total-amount">0</td>
 													<td><input type="text" name="nnwctns[]" class="form-control nnwctns" readonly></td>
-													<td><input type="text" name="total_nnw[]" class="form-control total_nnw" readonly></td>
-													<td>
-														<input name="cd_new_detail[]" value="y">
-														<input name="cd_cost_detail_id[]" value="">
-														<input name="cd_invchid[]" value="<?= $INVCHID ?>">
-														<input name="cd_shipmentpriceID[]" value="<?= $buyer_po['shipmentpriceID'] ?>">
+													<td><input type="text" name="total_nnw[]" class="form-control total_nnw" readonly>
+														<input type="hidden" name="cd_new_detail[]" value="y">
+														<input type="hidden" name="cd_cost_detail_id[]" value="">
+														<input type="hidden" name="cd_invchid[]" value="<?= $INVCHID ?>">
+														<input type="hidden" name="cd_shipmentpriceID[]" value="<?= $buyer_po['shipmentpriceID'] ?>">
 													</td>
 												</tr>
 											<?php } ?>
@@ -200,8 +197,8 @@ if (!empty($_POST)) {
 							<?php } ?>
 							<?php if (empty($row_cost_head)) {
 								$INVCHID = $last_cost_head_id; ?>
-								<div class="cost-head-section">
-									<table>
+								<div class="cost-head-section border p-2 mb-2">
+									<table class="mb-2">
 										<tr>
 											<td>
 												<button type="button" class="btn btn-danger btn-xs pull-right" onclick="removeSection(this)">&times;</button>
@@ -210,23 +207,21 @@ if (!empty($_POST)) {
 												<strong>Color:</strong>
 											</td>
 											<td style="width:30%">
-												<select name="color_array[<?= $index ?>][]" class="form-control color-select" data-INVCHID="<?= $INVCHID ?>" data-invID="<?= $_GET['invID'] ?>" data-shipmentpriceID="<?= $buyer_po['shipmentpriceID'] ?>" multiple>
+												<select name="color_array[<?= $index ?>][]" class="form-control color-select" data-INVCHID="<?= $INVCHID ?>" data-invID="<?= $_GET['invID'] ?>" data-shipmentpriceID="<?= $buyer_po['shipmentpriceID'] ?>" readonly multiple>
 													<?php foreach ($row_color as $color) {
 														$select = in_array($color['colorID'], $cost_head_colors) ? 'selected' : '' ?>
 														<option value="<?= $color['colorID'] ?>" <?= $select ?>><?= $color['color'] ?></option>
 													<?php } ?>
 												</select>
-												<input type="text" name="color[]" class="color-string" value="<?= implode(',', $cost_head_colors) ?>">
-												<input type="text" name="" class="ctn" value="">
-												<input type="text" name="" class="nnw" value="">
+												<input type="hidden" name="color[]" class="color-string" value="<?= implode(',', $cost_head_colors) ?>">
+												<input type="hidden" name="" class="ctn" value="">
+												<input type="hidden" name="" class="nnw" value="">
 											</td>
 											<td>
 												<strong>Description:</strong>
 											</td>
 											<td style="width:50%">
 												<input name="shipping_marking[]" class="form-control" value="<?= $shipping_marking ?>">
-											</td>
-											<td>
 												<input type="hidden" name="ch_new_head[]" value="y">
 												<input type="hidden" name="ch_invchid[]" value="<?= $INVCHID ?>">
 												<input type="hidden" name="ch_invID[]" value="<?= $_GET['invID'] ?>">
@@ -256,12 +251,12 @@ if (!empty($_POST)) {
 												<td><input type="text" name="unit_price[]" class="form-control unit-price" data-INVCHID="<?= $INVCHID ?>" oninput="calculateTotal(this, <?= $INVCHID ?>)"></td>
 												<td class="total-amount">0</td>
 												<td><input type="text" name="nnwctns[]" class="form-control nnwctns" readonly></td>
-												<td><input type="text" name="total_nnw[]" class="form-control total_nnw" readonly></td>
 												<td>
-													<input name="cd_new_detail[]" value="y">
-													<input name="cd_cost_detail_id[]" value="">
-													<input name="cd_invchid[]" value="<?= $INVCHID ?>">
-													<input name="cd_shipmentpriceID[]" value="<?= $buyer_po['shipmentpriceID'] ?>">
+													<input type="text" name="total_nnw[]" class="form-control total_nnw" readonly>
+													<input type="hidden" name="cd_new_detail[]" value="y">
+													<input type="hidden" name="cd_cost_detail_id[]" value="">
+													<input type="hidden" name="cd_invchid[]" value="<?= $INVCHID ?>">
+													<input type="hidden" name="cd_shipmentpriceID[]" value="<?= $buyer_po['shipmentpriceID'] ?>">
 												</td>
 											</tr>
 										</tbody>
@@ -275,7 +270,7 @@ if (!empty($_POST)) {
 				} ?>
 			</div>
 			<div style="float:right">
-				<button type="submit" class="btn btn-success">Submit</button>
+				<button type="submit" class="btn btn-success">Save</button>
 			</div>
 		</form>
 	</div>
@@ -285,6 +280,7 @@ if (!empty($_POST)) {
 <script>
 	$(document).ready(function() {
 		$('.color-select').select2();
+		
 	});
 
 	let last_invchid = <?= $INVCHID ?>;
@@ -320,24 +316,25 @@ if (!empty($_POST)) {
 		// $('.color-select').select2();
 	}
 
-	function addRow(btn, shipmentpriceID, INVCHID) {
-		$.ajax({
-			url: "../../ajax/ajax_cb.php",
-			method: "POST",
-			data: {
-				INVCHID: INVCHID,
-				shipmentpriceID: shipmentpriceID,
+	async function addRow(btn, shipmentpriceID, INVCHID) {
+		try {
+			const response = await $.ajax({
+				url: "../../ajax/ajax_cb.php",
+				method: "POST",
+				data: {
+					INVCHID,
+					shipmentpriceID,
+					invID: <?= $invID ?>,
+					type: 'addRow'
+				}
+			});
 
-				// sectionCount: sectionCount,
-				invID: <?= $invID ?>,
-				type: 'addRow'
-			},
-			success: function(data) {
-				$(btn).closest('table').find('.items').append(data);
-				updateAllColorSelects();
-				calculateAllNNWCTNS();
-			}
-		})
+			$(btn).closest('table').find('.items').append(response);
+			updateAllColorSelects();
+			calculateAllNNWCTNS();
+		} catch (error) {
+			console.error("Error adding row:", error);
+		}
 	}
 
 	function removeSection(btn, INVCHID) {
@@ -487,38 +484,38 @@ if (!empty($_POST)) {
 	}
 
 	function updateColorOptions(changedSelect) {
-        // Get the parent cost-head-section of the changed select
-        let costHeadSection = changedSelect.closest('.card-body');
+		// Get the parent cost-head-section of the changed select
+		let costHeadSection = changedSelect.closest('.card-body');
 
-        // Collect all selected colors in the same cost-head-section
-        let selectedColors = [];
-        costHeadSection.find('.color-select').each(function() {
-            let selected = $(this).val();
-            if (selected) {
-                selectedColors = selectedColors.concat(selected);
-            }
-        });
+		// Collect all selected colors in the same cost-head-section
+		let selectedColors = [];
+		costHeadSection.find('.color-select').each(function() {
+			let selected = $(this).val();
+			if (selected) {
+				selectedColors = selectedColors.concat(selected);
+			}
+		});
 
-        // Update options for all color-select inputs in the same cost-head-section
-        costHeadSection.find('.color-select').each(function() {
-            let currentSelect = $(this);
-            let currentSelected = currentSelect.val() || [];
+		// Update options for all color-select inputs in the same cost-head-section
+		costHeadSection.find('.color-select').each(function() {
+			let currentSelect = $(this);
+			let currentSelected = currentSelect.val() || [];
 
-            // Remove all options
-            currentSelect.find('option').each(function() {
-                $(this).prop('disabled', false); // Enable all options first
-            });
+			// Remove all options
+			currentSelect.find('option').each(function() {
+				$(this).prop('disabled', false); // Enable all options first
+			});
 
-            // Disable options that are selected in other inputs
-            costHeadSection.find('.color-select').not(currentSelect).each(function() {
-                let otherSelected = $(this).val() || [];
-                otherSelected.forEach(function(color) {
-                    currentSelect.find(`option[value="${color}"]`).prop('disabled', true);
-                });
-            });
+			// Disable options that are selected in other inputs
+			costHeadSection.find('.color-select').not(currentSelect).each(function() {
+				let otherSelected = $(this).val() || [];
+				otherSelected.forEach(function(color) {
+					currentSelect.find(`option[value="${color}"]`).prop('disabled', true);
+				});
+			});
 
-            // Reapply the current selection
-            currentSelect.val(currentSelected).trigger('change.select2');
-        });
-    }
+			// Reapply the current selection
+			currentSelect.val(currentSelected).trigger('change.select2');
+		});
+	}
 </script>

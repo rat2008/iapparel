@@ -78,11 +78,11 @@ if (!empty($_POST)) {
 						<div class="card-header">
 							<table>
 								<tr>
-									<td><button type="button" class="btn btn-primary" onclick="addSection(this, <?= $INVCHID ?>,<?= $buyer_po['shipmentpriceID'] ?>)">Add Section</button></td>
 									<th>PO#:</th>
 									<td><?= $buyer_po['GTN_buyerpo'] ?></td>
-									<th>ITEM/STYLE#:</th>
+									<th class="pl-2">ITEM/STYLE#:</th>
 									<td><?= $buyer_po['GTN_styleno'] ?></td>
+									<td class="pl-2"><button type="button" class="btn btn-sm btn-primary" onclick="addSection(this, <?= $INVCHID ?>,<?= $buyer_po['shipmentpriceID'] ?>)"><i class="fa-solid fa-plus"></i></button></td>
 								</tr>
 							</table>
 						</div>

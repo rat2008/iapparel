@@ -309,6 +309,10 @@ if (!empty($_POST)) {
 				// $('#cost_head_' + INVCHID).append(data);
 				// $('#spid'+shipmentpriceID).val(js_cost_detail_id)
 				$('.color-select').select2();
+
+				$(btn).closest('.card').find('.color-select').each(function() {
+					updateColorOptions($(this));
+				});
 			}
 		})
 
@@ -363,6 +367,7 @@ if (!empty($_POST)) {
 	}
 
 	$(document).on('change', '.color-select', function() {
+		updateColorOptions($(this));
 		const selected = $(this).val(); // e.g. ["Red", "Green"]
 
 		const colorStr = selected ? selected.join(',') : '';
@@ -434,8 +439,6 @@ if (!empty($_POST)) {
 			let qty = parseFloat($('.qty-' + INVCHID).val()) || 0;
 			let totalAmount = unitPrice * qty;
 
-			console.log(qty);
-
 			$(this).closest('tr').find('.total-amount').text(totalAmount.toFixed(2));
 		});
 
@@ -482,4 +485,40 @@ if (!empty($_POST)) {
 			});
 		});
 	}
+
+	function updateColorOptions(changedSelect) {
+        // Get the parent cost-head-section of the changed select
+        let costHeadSection = changedSelect.closest('.card-body');
+
+        // Collect all selected colors in the same cost-head-section
+        let selectedColors = [];
+        costHeadSection.find('.color-select').each(function() {
+            let selected = $(this).val();
+            if (selected) {
+                selectedColors = selectedColors.concat(selected);
+            }
+        });
+
+        // Update options for all color-select inputs in the same cost-head-section
+        costHeadSection.find('.color-select').each(function() {
+            let currentSelect = $(this);
+            let currentSelected = currentSelect.val() || [];
+
+            // Remove all options
+            currentSelect.find('option').each(function() {
+                $(this).prop('disabled', false); // Enable all options first
+            });
+
+            // Disable options that are selected in other inputs
+            costHeadSection.find('.color-select').not(currentSelect).each(function() {
+                let otherSelected = $(this).val() || [];
+                otherSelected.forEach(function(color) {
+                    currentSelect.find(`option[value="${color}"]`).prop('disabled', true);
+                });
+            });
+
+            // Reapply the current selection
+            currentSelect.val(currentSelected).trigger('change.select2');
+        });
+    }
 </script>

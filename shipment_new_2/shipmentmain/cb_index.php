@@ -22,7 +22,7 @@ $invID = $_GET['invID'];
 $row_buyer_po = $buyer_po_header->select_buyer_po($_GET['invID']);
 
 $last_cost_head_id = $handle_misc->funcMaxID('tblbuyer_invoice_payment_cost_head', "INVCHID");
-
+$INVCHID = $last_cost_head_id;
 // var_dump('<pre>');
 // 	var_dump($last_cost_head_id);
 // 	die();
@@ -64,7 +64,6 @@ if (!empty($_POST)) {
 					$row_color = $buyer_po_header->select_po_color($_GET['invID'], $buyer_po['shipmentpriceID']);
 					$row_cost_head = $buyer_po_header->select_cost_head($_GET['invID'], $buyer_po['shipmentpriceID']);
 					$cost_head_colors = [];
-					$INVCHID = 0;
 
 					if (!empty($row_cost_head)) {
 						$cost_head_colors = explode(',', $row_cost_head[0]['colorID']);
@@ -195,8 +194,7 @@ if (!empty($_POST)) {
 									</table>
 								</div>
 							<?php } ?>
-							<?php if (empty($row_cost_head)) {
-								$INVCHID = $last_cost_head_id; ?>
+							<?php if (empty($row_cost_head)) { ?>
 								<div class="cost-head-section border p-2 mb-2">
 									<table class="mb-2">
 										<tr>

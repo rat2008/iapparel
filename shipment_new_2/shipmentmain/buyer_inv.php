@@ -657,7 +657,15 @@ $script_date = "201811271252";
 						echo '<td><a type="button" class="btn btn-warning btn-xs" href="cb_index.php?invID='.$ID.'" target="_blank">
 										 Cost Breakdown</a>
 									<input type="hidden" id="from_invID" value="'.$from_invID.'"></td>';
-						
+						echo '<td><div class="dropdown">
+								<button class="btn btn-primary btn-xs dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									Print
+								</button>
+								<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+									<li><a class="dropdown-item" href="cb_pdf.php?invID='.$from_invID.'">PDF</a></li>
+									<li><a class="dropdown-item" href="cb_excel.php?invID='.$from_invID.'">Excel</a></li>
+								</ul>
+							</div></td>';
 					}
 						?>
 					

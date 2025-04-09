@@ -55,11 +55,11 @@ if (!empty($_POST)) {
 </head>
 
 <body>
-	<div class="container">
+	<div class="container p-3">
 		<form id="order-form" action="../../cf/func_cb.php" method="POST">
 			<div id="order-sections">
-				<input name="delete_cost_head_id" type="text">
-				<input name="delete_cost_detail_id" type="text">
+				<input type="hidden" name="delete_cost_head_id" type="text">
+				<input type="hidden" name="delete_cost_detail_id" type="text">
 				<?php foreach ($row_buyer_po as $index => $buyer_po) {
 					$row_shipping_marking = $buyer_po_header->select_shipping_marking($_GET['invID'], $buyer_po['shipmentpriceID']);
 					$row_color = $buyer_po_header->select_po_color($_GET['invID'], $buyer_po['shipmentpriceID']);
@@ -84,12 +84,12 @@ if (!empty($_POST)) {
 									<th class="pl-2">ITEM/STYLE#:</th>
 									<td><?= $buyer_po['GTN_styleno'] ?></td>
 									<td class="pl-2"><button type="button" class="btn btn-sm btn-primary" onclick="addSection(this, <?= $INVCHID ?>,<?= $buyer_po['shipmentpriceID'] ?>)"><i class="fa-solid fa-plus"></i></button></td>
-									<td class="pl-2">
+									<!-- <td class="pl-2">
 										<button class="btn btn-success btn-sm ">Excel</button>
 									</td>
 									<td class="pl-2">
 										<button class="btn btn-warning btn-sm ">PDF</button>
-									</td>
+									</td> -->
 								</tr>
 							</table>
 						</div>

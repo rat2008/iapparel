@@ -359,6 +359,7 @@ if (!empty($_POST)) {
 			$('input[name="delete_cost_detail_id"]').val(deleteStr);
 		}
 		$(btn).closest('tr').remove();
+		calculateAllTotal();
 	}
 
 	function calculateTotal(input, INVCHID) {

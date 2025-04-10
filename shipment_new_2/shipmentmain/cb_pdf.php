@@ -4,17 +4,17 @@ include("../../function/misc.php");
 include("../../mpdf/mpdf.php");
 include("../../model/tblbuyer_invoice_payment_cost_head.php");
 include("../../model/tblbuyer_invoice_payment_cost_detail.php");
+include_once("../../cf/cs_cb.php");
 
 $handle_misc = new misc($conn);
 
 // Fetch data
 $invID = $_GET['invID']; // Invoice ID from request
-$shipmentpriceID = $_GET['shipmentpriceID']; // Shipment price ID from request
-
 $model_cost_head = new tblbuyer_invoice_payment_cost_head($conn, $handle_misc);
 $model_cost_detail = new tblbuyer_invoice_payment_cost_detail($conn, $handle_misc);
+$buyer_po_header = new cs_cb($conn, $handle_misc);
 
-$cost_heads = $model_cost_head->getAllByArr(['invID' => $invID]);
+$row_buyer_po = $buyer_po_header->select_buyer_po($invID);
 
 // Initialize mPDF
 $pdf = new mPDF(); 
@@ -38,51 +38,97 @@ $html = '<style>
     .no-border { border: none; }
 </style>';
 
-foreach ($cost_heads['row'] as $cost_head) {
-    $cost_details = $model_cost_detail->getAllByArr(['INVCHID' => $cost_head['INVCHID']]);
+$html .= '<table>
+    <tr>
+        <td colspan="7" class="header" style="text-align: center;">Inv Attachment</td>
+    </tr>
+    <tr>
+        <td colspan="7" class="header" style="text-align: center;">Cost and Weight Breakdown</td>
+    </tr>
+</table><br>';
 
+foreach ($row_buyer_po as $buyer_po) {
     $html .= '<table>
         <tr>
-            <td class="no-border header" colspan="2">ITEM/KOHLS STYLE#: ' . $cost_head['shipmentpriceID'] . '</td>
-            <td class="no-border header" colspan="2">ITEM DESCRIPTION: ' . $cost_head['item_desc'] . '</td>
+            <td class="no-border header">PO#:</td>
+            <td class="no-border">' . $buyer_po['GTN_buyerpo'] . '</td>
         </tr>
         <tr>
-            <td class="no-border" colspan="4">Color: Drop down color name</td>
+            <td class="no-border header">ITEM/KOHL\'S STYLE#:</td>
+            <td class="no-border">' . $buyer_po['GTN_styleno'] . '</td>
         </tr>
-    </table>';
-
-    $html .= '<table>
-        <thead>
-            <tr>
-                <th>QTY</th>
-                <th>UNIT PRICE</th>
-                <th>TOTAL AMOUNT</th>
-                <th>NNW / CTNS (KG)</th>
-                <th>TOTAL NNW (KG)</th>
-            </tr>
-        </thead>
-        <tbody>';
-
-    foreach ($cost_details['row'] as $detail) {
-        $total_amount = $detail['qty'] * $detail['unitprice'];
-        $html .= '<tr>
-            <td>' . $detail['qty'] . '</td>
-            <td>' . number_format($detail['unitprice'], 3) . '</td>
-            <td>' . number_format($total_amount, 2) . '</td>
-            <td>' . number_format($detail['ctn_qty'], 2) . '</td>
-            <td>' . number_format($detail['total_nnw'], 2) . '</td>
-        </tr>';
-    }
-
-    $html .= '</tbody>
-        <tfoot>
-            <tr>
-                <td colspan="2" class="highlight">Total Amount:</td>
-                <td class="highlight">' . number_format(array_sum(array_column($cost_details['row'], 'qty')) * array_sum(array_column($cost_details['row'], 'unitprice')), 2) . '</td>
-                <td colspan="2"></td>
-            </tr>
-        </tfoot>
     </table><br>';
+
+    $row_cost_head = $buyer_po_header->select_cost_head($invID, $buyer_po['shipmentpriceID']);
+    foreach ($row_cost_head as $cost_head) {
+        $row_color = $buyer_po_header->select_po_color($invID, $buyer_po['shipmentpriceID']);
+        $color_arr = [];
+        foreach ($row_color as $color) {
+            if (in_array($color['colorID'], explode(',', $cost_head['colorID']))) {
+                $color_arr[] = $color['color'];
+            }
+        }
+
+        $html .= '<table>
+            <tr>
+                <td class="header">ITEM DESCRIPTION:</td>
+                <td colspan="6">' . $cost_head['item_desc'] . '</td>
+            </tr>
+            <tr>
+                <td class="header">Color:</td>
+                <td colspan="6">' . implode(', ', $color_arr) . '</td>
+            </tr>
+        </table>';
+
+        $html .= '<table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th colspan="2">QTY</th>
+                    <th>UNIT PRICE</th>
+                    <th>TOTAL AMOUNT</th>
+                    <th>NNW / CTNS (KG)</th>
+                    <th>TOTAL NNW (KG)</th>
+                </tr>
+            </thead>
+            <tbody>';
+
+        $row_cost_detail = $buyer_po_header->select_cost_detail($cost_head['INVCHID']);
+        $total_amount = 0;
+        $final_total_nnw = 0;
+        $qty = 0;
+
+        foreach ($row_cost_detail as $cost_detail) {
+            $amount = $cost_detail['qty'] * $cost_detail['unitprice'];
+            $total_amount += $amount;
+            $final_total_nnw += $cost_detail['total_nnw'];
+            $qty = $cost_detail['qty'];
+
+            $html .= '<tr>
+                <td>' . $cost_detail['item_desc'] . '</td>
+                <td>' . $cost_detail['qty'] . '</td>
+                <td>PCS</td>
+                <td>' . number_format($cost_detail['unitprice'], 3) . '</td>
+                <td>' . number_format($amount, 2) . '</td>
+                <td>' . number_format($cost_detail['ctn_qty'], 2) . '</td>
+                <td>' . number_format($cost_detail['total_nnw'], 2) . '</td>
+            </tr>';
+        }
+
+        $html .= '</tbody>
+            <tfoot>
+                <tr>
+                    <th class="highlight">Total Amount:</th>
+                    <th class="highlight">' . $qty . '</th>
+                    <th class="highlight">SETS</th>
+                    <th class="highlight"></th>
+                    <th class="highlight">' . number_format($total_amount, 2) . '</th>
+                    <th class="highlight"></th>
+                    <th class="highlight">' . number_format($final_total_nnw, 2) . '</th>
+                </tr>
+            </tfoot>
+        </table><br>';
+    }
 }
 
 // Write HTML to PDF

@@ -15,30 +15,30 @@ class func_cb
 $handle_misc = new misc();
 
 if ($_POST) {
-	// var_dump('<pre>');
-	// var_dump($_POST);
-	// die();
+    // var_dump('<pre>');
+    // var_dump($_POST);
+    // die();
     // Fetch POST data
-    $color               	= $_POST['color'];               // array of strings
-    $shipping_marking    	= $_POST['shipping_marking'];    // array of strings
-    $ch_new_head         	= $_POST['ch_new_head'];         // array of 'n' or 'y'
-    $ch_invchid          	= $_POST['ch_invchid'];          // array of numeric strings
-    $ch_invID            	= $_POST['ch_invID'];            // array of invoice IDs
-    $ch_shipmentpriceID  	= $_POST['ch_shipmentpriceID'];  // array of shipment price IDs
+    $color                   = $_POST['color'];               // array of strings
+    $shipping_marking        = $_POST['shipping_marking'];    // array of strings
+    $ch_new_head             = $_POST['ch_new_head'];         // array of 'n' or 'y'
+    $ch_invchid              = $_POST['ch_invchid'];          // array of numeric strings
+    $ch_invID                = $_POST['ch_invID'];            // array of invoice IDs
+    $ch_shipmentpriceID      = $_POST['ch_shipmentpriceID'];  // array of shipment price IDs
 
-    $item_description    	= $_POST['item_description'];    // array of detail descriptions
-    $unit_price          	= $_POST['unit_price'];          // array of unit prices
-    $qty          		 	= $_POST['qty'];                // array of quantities
-    $nnwctns             	= $_POST['nnwctns'];             // array of carton weights
-    $total_nnw           	= $_POST['total_nnw'];           // array of total weights
+    $item_description        = $_POST['item_description'];    // array of detail descriptions
+    $unit_price              = $_POST['unit_price'];          // array of unit prices
+    $qty                       = $_POST['qty'];                // array of quantities
+    $nnwctns                 = $_POST['nnwctns'];             // array of carton weights
+    $total_nnw               = $_POST['total_nnw'];           // array of total weights
 
-    $cd_new_detail       	= $_POST['cd_new_detail'];       // array 'y' or 'n'
-    $cd_cost_detail_id   	= $_POST['cd_cost_detail_id'];   // array of IDs
-    $cd_invchid          	= $_POST['cd_invchid'];          // array matching detail to section
-    $cd_shipmentpriceID  	= $_POST['cd_shipmentpriceID'];
+    $cd_new_detail           = $_POST['cd_new_detail'];       // array 'y' or 'n'
+    $cd_cost_detail_id       = $_POST['cd_cost_detail_id'];   // array of IDs
+    $cd_invchid              = $_POST['cd_invchid'];          // array matching detail to section
+    $cd_shipmentpriceID      = $_POST['cd_shipmentpriceID'];
 
-	$delete_cost_head_id 	= $_POST['delete_cost_head_id'];         
-    $delete_cost_detail_id  = $_POST['delete_cost_detail_id'];
+    $delete_cost_head_id     = explode(',', $_POST['delete_cost_head_id']);
+    $delete_cost_detail_id  = explode(',', $_POST['delete_cost_detail_id']);
 
     $model_cost_head = new tblbuyer_invoice_payment_cost_head($conn, $handle_misc);
     $model_cost_detail = new tblbuyer_invoice_payment_cost_detail($conn, $handle_misc);
@@ -111,5 +111,43 @@ if ($_POST) {
             ];
             $model_cost_detail->update($data);
         }
+    }
+
+    //process delete cost and detail
+    foreach ($delete_cost_head_id as $cost_head_id) {
+        $arr_cost_head = $model_cost_head->getAllByArr(['INVCHID' => $cost_head_id]);
+        $row_cost_head = $arr_cost_head['row'];
+
+        $data = [
+            "INVCHID" => $cost_head_id,
+            "del" => 1,
+            "delBy" => $acctid,
+            "delDate" => date('Y-m-d H:i:s')
+        ];
+        $model_cost_head->update($data);
+
+        foreach ($row_cost_head as $cost_head) {
+            $arr_cost_detail = $model_cost_detail->getAllByArr(['INVCHID' => $cost_head_id]);
+            $row_cost_detail = $arr_cost_detail['row'];
+
+            foreach ($row_cost_detail as $cost_detail) {
+                $data = [
+                    "ID" => $cost_detail['ID'],
+                    "del" => 1,
+                    "delBy" => $acctid,
+                    "delDate" => date('Y-m-d H:i:s')
+                ];
+                $model_cost_detail->update($data);
+            }
+        }
+    }
+    foreach ($delete_cost_detail_id as $cost_detail_id) {
+        $data = [
+            "ID" => $cost_detail_id,
+            "del" => 1,
+            "delBy" => $acctid,
+            "delDate" => date('Y-m-d H:i:s')
+        ];
+        $model_cost_detail->update($data);
     }
 }

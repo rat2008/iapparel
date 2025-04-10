@@ -59,6 +59,8 @@ foreach ($row_buyer_po as $buyer_po) {
     $activeSheet->setCellValue("A$row", 'PO#')
         ->setCellValue("B$row", $buyer_po['GTN_buyerpo']);
 
+    $sheet->getActiveSheet()->getStyle('B' . $row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+
     $row++;
     $row++;
 
@@ -119,7 +121,7 @@ foreach ($row_buyer_po as $buyer_po) {
 
         foreach ($row_cost_detail as $cost_detail) {
             $qty = $cost_detail['qty'];
-            (double)$amount = (double)$cost_detail['qty'] * (double)$cost_detail['unitprice'];
+            (float)$amount = (float)$cost_detail['qty'] * (float)$cost_detail['unitprice'];
             $total_amount = $total_amount + $amount;
             $final_total_nnw = $final_total_nnw + $cost_detail['total_nnw'];
 

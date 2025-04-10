@@ -61,7 +61,7 @@ if ($type == 'addRow') {
 		</td>
 		<td><input type="text" name="item_description[]" class="form-control"></td>
 		<td><input type="text" name="qty[]" class="form-control qty-<?= $INVCHID ?>" readonly></td>
-		<td><input type="text" name="unit_price[]" data-INVCHID="<?= $INVCHID ?>" class="form-control unit-price" oninput="calculateTotal(this, <?= $INVCHID ?>)"></td>
+		<td><input type="number" name="unit_price[]" data-INVCHID="<?= $INVCHID ?>" class="form-control unit-price" oninput="calculateTotal(this, <?= $INVCHID ?>)"></td>
 		<td class="total-amount">0</td>
 		<td><input type="text" name="nnwctns[]" class="form-control nnwctns" readonly></td>
 		<td>
@@ -130,7 +130,7 @@ if ($type == 'addSection') { ?>
 						</td>
 						<td><input type="text" name="item_description[]" class="form-control" value="<?= $cost_detail['item_desc'] ?>"></td>
 						<td><input type="text" name="qty[]" class="form-control qty-<?= $INVCHID ?>" value="<?= $color_qty ?>" readonly></td>
-						<td><input type="text" name="unit_price[]" class="form-control unit-price" data-INVCHID="<?= $INVCHID ?>" oninput="calculateTotal(this, <?= $INVCHID ?>)" value="<?= $cost_detail['unitprice'] ?>"></td>
+						<td><input type="number" name="unit_price[]" class="form-control unit-price" data-INVCHID="<?= $INVCHID ?>" oninput="calculateTotal(this, <?= $INVCHID ?>)" value="<?= $cost_detail['unitprice'] ?>"></td>
 						<td class="total-amount">0</td>
 						<td><input type="text" name="nnwctns[]" class="form-control nnwctns" value="<?= $cost_detail['ctn_qty'] ?>" readonly></td>
 						<td>
@@ -150,7 +150,7 @@ if ($type == 'addSection') { ?>
 						</td>
 						<td><input type="text" name="item_description[]" class="form-control"></td>
 						<td><input type="text" name="qty[]" class="form-control qty-<?= $INVCHID ?>" value="<?= $color_qty ?>" readonly></td>
-						<td><input type="text" name="unit_price[]" class="form-control unit-price" data-INVCHID="<?= $INVCHID ?>" oninput="calculateTotal(this, <?= $INVCHID ?>)"></td>
+						<td><input type="number" name="unit_price[]" class="form-control unit-price" data-INVCHID="<?= $INVCHID ?>" oninput="calculateTotal(this, <?= $INVCHID ?>)"></td>
 						<td class="total-amount">0</td>
 						<td><input type="text" name="nnwctns[]" class="form-control nnwctns" readonly></td>
 						<td>

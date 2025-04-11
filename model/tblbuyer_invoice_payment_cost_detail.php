@@ -41,16 +41,8 @@ public function create(){
     $stmt->bindParam(":del", $this->del);
     $stmt->bindParam(":delby", $this->delby);
     $stmt->bindParam(":delDate", $this->delDate);
+    $stmt->execute();
 
-    if (!$stmt->execute()) {
-        // Log or display the error information
-        $errorInfo = $stmt->errorInfo();
-        echo "Error Code: " . $errorInfo[0] . "<br>";
-        echo "Error Message: " . $errorInfo[2] . "<br>";
-        throw new Exception("Database error: " . $errorInfo[2]);
-    }
-
-	
 }
 
 public function update($arr_td){
@@ -62,14 +54,7 @@ public function update($arr_td){
 	$query = rtrim($query, ",");
 	$query .= " WHERE ID=:ID";
     $stmt = $this->conn->prepare($query);
-	
-	if (!$stmt->execute($arr_td)) {
-        // Log or display the error information
-        $errorInfo = $stmt->errorInfo();
-        echo "Error Code: " . $errorInfo[0] . "<br>";
-        echo "Error Message: " . $errorInfo[2] . "<br>";
-        throw new Exception("Database error: " . $errorInfo[2]);
-    }
+    $stmt->execute($arr_td);
 
 }
 

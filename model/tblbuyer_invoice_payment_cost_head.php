@@ -38,14 +38,7 @@ public function create(){
     $stmt->bindParam(":del", $this->del);
     $stmt->bindParam(":delBy", $this->delBy);
     $stmt->bindParam(":delDate", $this->delDate);
-
-    if (!$stmt->execute()) {
-        // Log or display the error information
-        $errorInfo = $stmt->errorInfo();
-        echo "Error Code: " . $errorInfo[0] . "<br>";
-        echo "Error Message: " . $errorInfo[2] . "<br>";
-        throw new Exception("Database error: " . $errorInfo[2]);
-    }
+    $stmt->execute();
 
 }
 
@@ -58,14 +51,7 @@ public function update($arr_td){
 	$query = rtrim($query, ",");
 	$query .= " WHERE INVCHID=:INVCHID";
     $stmt = $this->conn->prepare($query);
-
-	if (!$stmt->execute($arr_td)) {
-        // Log or display the error information
-        $errorInfo = $stmt->errorInfo();
-        echo "Error Code: " . $errorInfo[0] . "<br>";
-        echo "Error Message: " . $errorInfo[2] . "<br>";
-        throw new Exception("Database error: " . $errorInfo[2]);
-    }
+    $stmt->execute($arr_td);
 
 }
 

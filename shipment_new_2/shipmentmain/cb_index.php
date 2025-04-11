@@ -55,7 +55,7 @@ if (!empty($_POST)) {
 </head>
 
 <body>
-	<div class="container p-3">
+	<div class="container p-3 mb-5">
 		<form id="order-form" action="../../cf/func_cb.php" method="POST" onsubmit="return validateForm();">
 			<div id="order-sections">
 				<input type="hidden" name="delete_cost_head_id" type="text">
@@ -112,7 +112,7 @@ if (!empty($_POST)) {
 								}
 							?>
 								<div class="cost-head-section border p-2 mb-2">
-									<table class="mb-2">
+									<table class="mb-2'">
 										<tr>
 											<td>
 												<button type="button" class="btn btn-danger btn-xs pull-right" onclick="removeSection(this, <?= $INVCHID ?>)">&times;</button>
@@ -152,7 +152,8 @@ if (!empty($_POST)) {
 												<th><button type="button" class="btn btn-success btn-xs" onclick="addRow(this, <?= $buyer_po['shipmentpriceID'] ?>,<?= $INVCHID ?>)">+</button></th>
 												<th>Item Description</th>
 												<th>Qty</th>
-												<th>Unit Price<font color="red">*</font></th>
+												<th>Unit Price<font color="red">*</font>
+												</th>
 												<th>Total Amount</th>
 												<th>NNWCTNS (KG)</th>
 												<th>Total NNW (KG)</th>
@@ -214,7 +215,7 @@ if (!empty($_POST)) {
 							<?php } ?>
 							<?php if (empty($row_cost_head)) { ?>
 								<div class="cost-head-section border p-2 mb-2">
-									<table class="mb-2">
+									<table class="mb-2'">
 										<tr>
 											<td>
 												<button type="button" class="btn btn-danger btn-xs pull-right" onclick="removeSection(this)">&times;</button>
@@ -254,7 +255,8 @@ if (!empty($_POST)) {
 												<th><button type="button" class="btn btn-success btn-xs" onclick="addRow(this, <?= $buyer_po['shipmentpriceID'] ?>,<?= $last_cost_head_id ?>)">+</button></th>
 												<th>Item Description</th>
 												<th>Qty</th>
-												<th>Unit Price<font color="red">*</font></th>
+												<th>Unit Price<font color="red">*</font>
+												</th>
 												<th>Total Amount</th>
 												<th>NNWCTNS (KG)</th>
 												<th>Total NNW (KG)</th>
@@ -359,6 +361,15 @@ if (!empty($_POST)) {
 	}
 
 	function removeSection(btn, INVCHID) {
+		// Count the number of remaining sections
+		const remainingSections = $(btn).closest('.card-body').find('.cost-head-section').length;
+
+		// Prevent deletion if only one section remains
+		if (remainingSections <= 1) {
+			alert("At least one section must remain.");
+			return;
+		}
+
 		if (INVCHID) {
 			temp = $('input[name="delete_cost_head_id"]').val();
 			let deleteStr = INVCHID + ',' + temp;
@@ -368,6 +379,15 @@ if (!empty($_POST)) {
 	}
 
 	function removeRow(btn, ID) {
+		// Count the number of remaining rows in the current section
+		const remainingRows = $(btn).closest('tbody').find('tr').length;
+
+		// Prevent deletion if only one row remains
+		if (remainingRows <= 1) {
+			alert("At least one row must remain.");
+			return;
+		}
+
 		if (ID) {
 			temp = $('input[name="delete_cost_detail_id"]').val();
 			let deleteStr = ID + ',' + temp;
@@ -553,7 +573,7 @@ if (!empty($_POST)) {
 				$(this).closest('tr').find('.valid_unit_price').text('');
 			}
 		});
-		
+
 		$('.color-select').each(function() {
 			if ($(this).val() === null || $(this).val().length === 0) {
 				isValid = false;

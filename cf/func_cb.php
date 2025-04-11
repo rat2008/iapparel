@@ -150,4 +150,7 @@ if ($_POST) {
         ];
         $model_cost_detail->update($data);
     }
+
+    echo "<script>alert('Cost Breakdown Updated');</script>";
+    header("Location: ../shipment_new_2/shipmentmain/buyer_inv.php?id=" . $ch_invID[0] . '&isBuyerPayment=true');
 }

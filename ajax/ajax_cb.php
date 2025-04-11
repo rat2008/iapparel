@@ -78,7 +78,7 @@ if ($type == 'addRow') {
 <?php }
 if ($type == 'addSection') { ?>
 	<div class="cost-head-section border p-2 mb-2">
-		<table class="mb-2">
+		<table class="mb-2 cost-head-row">
 			<tr>
 				<td>
 					<button type="button" class="btn btn-danger btn-xs pull-right" onclick="removeSection(this)">&times;</button>

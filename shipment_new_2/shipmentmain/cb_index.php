@@ -83,7 +83,7 @@ if (!empty($_POST)) {
 									<td><?= $buyer_po['GTN_buyerpo'] ?></td>
 									<th class="pl-2">ITEM/STYLE#:</th>
 									<td><?= $buyer_po['GTN_styleno'] ?></td>
-									<td class="pl-2"><button type="button" class="btn btn-sm btn-primary" onclick="addSection(this, <?= $INVCHID ?>,<?= $buyer_po['shipmentpriceID'] ?>)"><i class="fa-solid fa-plus"></i></button></td>
+									<td class="pl-2"><button type="button" class="btn btn-sm btn-primary" onclick="addSection(this, <?= $INVCHID ?>,<?= $buyer_po['shipmentpriceID'] ?>)"><i class="fa-solid fa-plus "></i></button></td>
 									<!-- <td class="pl-2">
 										<button class="btn btn-success btn-sm ">Excel</button>
 									</td>
@@ -127,6 +127,9 @@ if (!empty($_POST)) {
 														<option value="<?= $color_option['colorID'] ?>" <?= $selected_color ?>><?= $color_option['color'] ?></option>
 													<?php } ?>
 												</select>
+												<font color="red">*</font>
+												<br>
+												<font color="red" class="valid_color"></font>
 												<input type="hidden" name="color[]" class="color-string" value="<?= $cost_head['colorID'] ?>">
 												<input type="hidden" name="" class="ctn" value="0">
 												<input type="hidden" name="" class="nnw" value="0">
@@ -149,7 +152,7 @@ if (!empty($_POST)) {
 												<th><button type="button" class="btn btn-success btn-xs" onclick="addRow(this, <?= $buyer_po['shipmentpriceID'] ?>,<?= $INVCHID ?>)">+</button></th>
 												<th>Item Description</th>
 												<th>Qty</th>
-												<th>Unit Price</th>
+												<th>Unit Price<font color="red">*</font></th>
 												<th>Total Amount</th>
 												<th>NNWCTNS (KG)</th>
 												<th>Total NNW (KG)</th>
@@ -226,6 +229,9 @@ if (!empty($_POST)) {
 														<option value="<?= $color['colorID'] ?>" <?= $select ?>><?= $color['color'] ?></option>
 													<?php } ?>
 												</select>
+												<font color="red">*</font>
+												<br>
+												<font color="red" class="valid_color"></font>
 												<input type="hidden" name="color[]" class="color-string" value="<?= implode(',', $cost_head_colors) ?>">
 												<input type="hidden" name="" class="ctn" value="">
 												<input type="hidden" name="" class="nnw" value="">
@@ -248,7 +254,7 @@ if (!empty($_POST)) {
 												<th><button type="button" class="btn btn-success btn-xs" onclick="addRow(this, <?= $buyer_po['shipmentpriceID'] ?>,<?= $last_cost_head_id ?>)">+</button></th>
 												<th>Item Description</th>
 												<th>Qty</th>
-												<th>Unit Price</th>
+												<th>Unit Price<font color="red">*</font></th>
 												<th>Total Amount</th>
 												<th>NNWCTNS (KG)</th>
 												<th>Total NNW (KG)</th>
@@ -545,6 +551,15 @@ if (!empty($_POST)) {
 				$(this).closest('tr').find('.valid_unit_price').text('Unit Price is required');
 			} else {
 				$(this).closest('tr').find('.valid_unit_price').text('');
+			}
+		});
+		
+		$('.color-select').each(function() {
+			if ($(this).val() === null || $(this).val().length === 0) {
+				isValid = false;
+				$(this).closest('td').find('.valid_color').text('Color is required');
+			} else {
+				$(this).closest('td').find('.valid_color').text('');
 			}
 		});
 

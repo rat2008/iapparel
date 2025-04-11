@@ -92,6 +92,9 @@ if ($type == 'addSection') { ?>
 							<option value="<?= $color['colorID'] ?>"><?= $color['color'] ?></option>
 						<?php } ?>
 					</select>
+					<font color="red">*</font>
+					<br>
+					<font color="red" class="valid_color"></font>
 					<input type="hidden" name="color[]" class="color-string" value="">
 					<input type="hidden" name="" class="ctn" value="0">
 					<input type="hidden" name="" class="nnw" value="0">
@@ -116,7 +119,7 @@ if ($type == 'addSection') { ?>
 					<th><button type="button" class="btn btn-success btn-xs" onclick="addRow(this, <?= $shipmentpriceID ?>,<?= $INVCHID ?>)">+</button></th>
 					<th>Item Description</th>
 					<th>Qty</th>
-					<th>Unit Price</th>
+					<th>Unit Price<font color="red">*</font></th>
 					<th>Total Amount</th>
 					<th>NNWCTNS (KG)</th>
 					<th>Total NNW (KG)</th>

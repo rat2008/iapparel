@@ -1,16 +1,9 @@
 <?php
 
-include("../lock.php");
-include("../model/tblbuyer_invoice_payment_cost_head.php");
-include("../model/tblbuyer_invoice_payment_cost_detail.php");
-include("../function/misc.php");
-
-class func_cb
-{
-    // private $conn;
-
-    function __construct($conn) {}
-}
+include("../../lock.php");
+include("../../model/tblbuyer_invoice_payment_cost_head.php");
+include("../../model/tblbuyer_invoice_payment_cost_detail.php");
+include("../../function/misc.php");
 
 $handle_misc = new misc();
 
@@ -150,7 +143,8 @@ if ($_POST) {
         ];
         $model_cost_detail->update($data);
     }
-
-    echo "<script>alert('Cost Breakdown Updated');</script>";
-    header("Location: ../shipment_new_2/shipmentmain/buyer_inv.php?id=" . $ch_invID[0] . '&isBuyerPayment=true');
+    echo "<script>
+        alert('Cost Breakdown Updated');
+        window.location.href = 'buyer_inv.php?id=" . $ch_invID[0] . "&isBuyerPayment=true';
+    </script>";
 }

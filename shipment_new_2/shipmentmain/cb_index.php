@@ -56,7 +56,7 @@ if (!empty($_POST)) {
 
 <body>
 	<div class="container p-3 mb-5">
-		<form id="order-form" action="../../cf/func_cb.php" method="POST" onsubmit="return validateForm();">
+		<form id="order-form" action="cb_index_save.php" method="POST" onsubmit="return validateForm();">
 			<div id="order-sections">
 				<input type="hidden" name="delete_cost_head_id" type="text">
 				<input type="hidden" name="delete_cost_detail_id" type="text">

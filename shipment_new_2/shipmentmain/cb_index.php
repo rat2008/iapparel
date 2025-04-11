@@ -56,7 +56,7 @@ if (!empty($_POST)) {
 
 <body>
 	<div class="container p-3">
-		<form id="order-form" action="../../cf/func_cb.php" method="POST">
+		<form id="order-form" action="../../cf/func_cb.php" method="POST" onsubmit="return validateForm();">
 			<div id="order-sections">
 				<input type="hidden" name="delete_cost_head_id" type="text">
 				<input type="hidden" name="delete_cost_detail_id" type="text">
@@ -166,7 +166,10 @@ if (!empty($_POST)) {
 													</td>
 													<td><input type="text" name="item_description[]" class="form-control" value="<?= $cost_detail['item_desc'] ?>"></td>
 													<td><input type="text" name="qty[]" class="form-control qty-<?= $INVCHID ?>" value="<?= $color_qty ?>" readonly></td>
-													<td><input type="number" name="unit_price[]" class="form-control unit-price" data-INVCHID="<?= $INVCHID ?>" oninput="calculateTotal(this, <?= $INVCHID ?>)" value="<?= $cost_detail['unitprice'] ?>"></td>
+													<td>
+														<input type="number" name="unit_price[]" class="form-control unit-price" data-INVCHID="<?= $INVCHID ?>" oninput="calculateTotal(this, <?= $INVCHID ?>)" value="<?= $cost_detail['unitprice'] ?>">
+														<font color="red" class="valid_unit_price"></font>
+													</td>
 													<td class="total-amount"><?= $color_qty * $cost_detail['unitprice'] ?></td>
 													<td><input type="text" name="nnwctns[]" class="form-control nnwctns" value="<?= $cost_detail['ctn_qty'] ?>" readonly></td>
 													<td>
@@ -186,7 +189,10 @@ if (!empty($_POST)) {
 													</td>
 													<td><input type="text" name="item_description[]" class="form-control"></td>
 													<td><input type="text" name="qty[]" class="form-control qty-<?= $INVCHID ?>" value="<?= $color_qty ?>" readonly></td>
-													<td><input type="number" name="unit_price[]" class="form-control unit-price" data-INVCHID="<?= $INVCHID ?>" oninput="calculateTotal(this, <?= $INVCHID ?>)"></td>
+													<td>
+														<input type="number" name="unit_price[]" class="form-control unit-price" data-INVCHID="<?= $INVCHID ?>" oninput="calculateTotal(this, <?= $INVCHID ?>)">
+														<font color="red" class="valid_unit_price"></font>
+													</td>
 													<td class="total-amount">0</td>
 													<td><input type="text" name="nnwctns[]" class="form-control nnwctns" readonly></td>
 													<td>
@@ -255,7 +261,10 @@ if (!empty($_POST)) {
 												</td>
 												<td><input type="text" name="item_description[]" class="form-control"></td>
 												<td><input type="text" name="qty[]" class="form-control qty-<?= $last_cost_head_id ?>" readonly></td>
-												<td><input type="number" name="unit_price[]" class="form-control unit-price" data-INVCHID="<?= $last_cost_head_id ?>" oninput="calculateTotal(this, <?= $last_cost_head_id ?>)"></td>
+												<td>
+													<input type="number" name="unit_price[]" class="form-control unit-price" data-INVCHID="<?= $last_cost_head_id ?>" oninput="calculateTotal(this, <?= $last_cost_head_id ?>)">
+													<font color="red" class="valid_unit_price"></font>
+												</td>
 												<td class="total-amount">0</td>
 												<td><input type="text" name="nnwctns[]" class="form-control nnwctns" readonly></td>
 												<td>
@@ -276,7 +285,7 @@ if (!empty($_POST)) {
 				<?php } ?>
 			</div>
 			<div style="float:right">
-				<button type="submit" class="btn btn-success">Save</button>
+				<button type="button" onclick="finalcheck()" class="btn btn-success">Save</button>
 			</div>
 		</form>
 	</div>
@@ -524,5 +533,34 @@ if (!empty($_POST)) {
 			// Reapply the current selection
 			currentSelect.val(currentSelected).trigger('change.select2');
 		});
+	}
+
+	function validateForm() {
+		let isValid = true;
+
+		// Check if any unit price is empty
+		$('.unit-price').each(function() {
+			if ($(this).val() === '') {
+				isValid = false;
+				$(this).closest('tr').find('.valid_unit_price').text('Unit Price is required');
+			} else {
+				$(this).closest('tr').find('.valid_unit_price').text('');
+			}
+		});
+
+		if (!isValid) {
+			alert("Please fill in all required fields.");
+			return false;
+		}
+
+		return true;
+	}
+
+	function finalcheck() {
+		if (confirm("Save?")) {
+			$("#order-form").submit();
+		} else {
+			return false;
+		}
 	}
 </script>

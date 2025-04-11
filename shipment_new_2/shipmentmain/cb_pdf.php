@@ -32,29 +32,29 @@ $pdf->SetTitle('Cost Breakdown');
 $html = '<style>
     table { width: 100%; border-collapse: collapse; font-size: 10px; }
     th, td { border: 1px solid black; padding: 5px; text-align: left; }
-    th { background-color: #f2f2f2; }
     .header { font-weight: bold; font-size: 12px; }
     .highlight { background-color: yellow; }
     .no-border { border: none; }
+    .text-center { text-align: center; }
 </style>';
 
-$html .= '<table>
-    <tr>
-        <td colspan="7" class="header" style="text-align: center;">Inv Attachment</td>
-    </tr>
-    <tr>
-        <td colspan="7" class="header" style="text-align: center;">Cost and Weight Breakdown</td>
-    </tr>
-</table><br>';
+$html .= '
+    <div style="text-align: center;">
+        Inv Attachment
+    </div>
+    <div style="text-align: center;">
+        Cost and Weight Breakdown
+    </div>
+    <br>';
 
 foreach ($row_buyer_po as $buyer_po) {
     $html .= '<table>
         <tr>
-            <td class="no-border header">PO#:</td>
+            <td class="no-border header" style="width:40%">PO#:</td>
             <td class="no-border">' . $buyer_po['GTN_buyerpo'] . '</td>
         </tr>
         <tr>
-            <td class="no-border header">ITEM/KOHL\'S STYLE#:</td>
+            <td class="no-border header" style="width:40%">ITEM/KOHL\'S STYLE#:</td>
             <td class="no-border">' . $buyer_po['GTN_styleno'] . '</td>
         </tr>
     </table><br>';
@@ -71,24 +71,24 @@ foreach ($row_buyer_po as $buyer_po) {
 
         $html .= '<table>
             <tr>
-                <td class="header">ITEM DESCRIPTION:</td>
-                <td colspan="6">' . $cost_head['item_desc'] . '</td>
+                <td class="header" style="width:40%">ITEM DESCRIPTION:</td>
+                <td >' . $cost_head['item_desc'] . '</td>
             </tr>
             <tr>
-                <td class="header">Color:</td>
-                <td colspan="6">' . implode(', ', $color_arr) . '</td>
+                <td class="header" style="width:40%">Color:</td>
+                <td >' . implode(', ', $color_arr) . '</td>
             </tr>
         </table>';
 
         $html .= '<table>
             <thead>
                 <tr>
-                    <th></th>
-                    <th colspan="2">QTY</th>
-                    <th>UNIT PRICE</th>
-                    <th>TOTAL AMOUNT</th>
-                    <th>NNW / CTNS (KG)</th>
-                    <th>TOTAL NNW (KG)</th>
+                    <th class="text-center" style="width:40%"></th>
+                    <th class="text-center" colspan="2">QTY</th>
+                    <th class="text-center">UNIT PRICE</th>
+                    <th class="text-center">TOTAL AMOUNT</th>
+                    <th class="text-center">NNW / CTNS (KG)</th>
+                    <th class="text-center">TOTAL NNW (KG)</th>
                 </tr>
             </thead>
             <tbody>';
@@ -105,26 +105,26 @@ foreach ($row_buyer_po as $buyer_po) {
             $qty = $cost_detail['qty'];
 
             $html .= '<tr>
-                <td>' . $cost_detail['item_desc'] . '</td>
-                <td>' . $cost_detail['qty'] . '</td>
-                <td>PCS</td>
-                <td>' . number_format($cost_detail['unitprice'], 3) . '</td>
-                <td>' . number_format($amount, 2) . '</td>
-                <td>' . number_format($cost_detail['ctn_qty'], 2) . '</td>
-                <td>' . number_format($cost_detail['total_nnw'], 2) . '</td>
+                <td style="width:40%">' . $cost_detail['item_desc'] . '</td>
+                <td class="text-center">' . $cost_detail['qty'] . '</td>
+                <td class="text-center">PCS</td>
+                <td class="text-center">' . number_format($cost_detail['unitprice'], 3) . '</td>
+                <td class="text-center">$' . number_format($amount, 2) . '</td>
+                <td class="text-center">' . number_format($cost_detail['ctn_qty'], 2) . '</td>
+                <td class="text-center">' . number_format($cost_detail['total_nnw'], 2) . '</td>
             </tr>';
         }
 
         $html .= '</tbody>
             <tfoot>
                 <tr>
-                    <th class="highlight">Total Amount:</th>
-                    <th class="highlight">' . $qty . '</th>
-                    <th class="highlight">SETS</th>
-                    <th class="highlight"></th>
-                    <th class="highlight">' . number_format($total_amount, 2) . '</th>
-                    <th class="highlight"></th>
-                    <th class="highlight">' . number_format($final_total_nnw, 2) . '</th>
+                    <th class="text-center">Total Amount:</th>
+                    <th class="text-center">' . $qty . '</th>
+                    <td class="text-center">SETS</td>
+                    <th class=""></th>
+                    <th class="text-center">$' . number_format($total_amount, 2) . '</th>
+                    <th class=""></th>
+                    <th class="text-center">' . number_format($final_total_nnw, 2) . '</th>
                 </tr>
             </tfoot>
         </table><br>';

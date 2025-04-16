@@ -57,6 +57,11 @@ if (!empty($_POST)) {
 <body>
 	<div class="container p-3 mb-5">
 		<form id="order-form" action="cb_index_save.php" method="POST" onsubmit="return validateForm();">
+			<div class="row mb-2">
+				<div class="col-md-12">
+					<button type="button" onclick="finalcheck()" class="btn btn-success">Save</button>
+				</div>
+			</div>
 			<div id="order-sections">
 				<input type="hidden" name="delete_cost_head_id" type="text">
 				<input type="hidden" name="delete_cost_detail_id" type="text">
@@ -115,7 +120,7 @@ if (!empty($_POST)) {
 									<table class="mb-2'">
 										<tr>
 											<td>
-												<button type="button" class="btn btn-danger btn-xs pull-right" onclick="removeSection(this, <?= $INVCHID ?>)">&times;</button>
+												<button type="button" class="btn btn-danger btn-xs pull-right" onclick="removeSection(this, <?= $INVCHID ?>)"><i class="fa-solid fa-trash"></i></button>
 											</td>
 											<td>
 												<strong>Color:</strong>
@@ -218,7 +223,7 @@ if (!empty($_POST)) {
 									<table class="mb-2'">
 										<tr>
 											<td>
-												<button type="button" class="btn btn-danger btn-xs pull-right" onclick="removeSection(this)">&times;</button>
+												<button type="button" class="btn btn-danger btn-xs pull-right" onclick="removeSection(this)"><i class="fa-solid fa-trash"></i></button>
 											</td>
 											<td>
 												<strong>Color:</strong>
@@ -276,7 +281,7 @@ if (!empty($_POST)) {
 												<td class="total-amount">0</td>
 												<td><input type="text" name="nnwctns[]" class="form-control nnwctns" readonly></td>
 												<td>
-													<input type="hidden" name="total_nnw[]" class="form-control total_nnw" readonly>
+													<input type="text" name="total_nnw[]" class="form-control total_nnw" readonly>
 													<input type="hidden" name="cd_new_detail[]" value="y">
 													<input type="hidden" name="cd_cost_detail_id[]" value="">
 													<input type="hidden" name="cd_invchid[]" value="<?= $last_cost_head_id ?>">
@@ -291,9 +296,6 @@ if (!empty($_POST)) {
 						</div>
 					</div>
 				<?php } ?>
-			</div>
-			<div style="float:right">
-				<button type="button" onclick="finalcheck()" class="btn btn-success">Save</button>
 			</div>
 		</form>
 	</div>

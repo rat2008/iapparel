@@ -32,15 +32,21 @@ if ($type == 'getQty') {
 	$bicid_array = [];
 	$total_ctn = 0;
 	$total_nnw = 0;
+	$group_number_array = [];
 
 	foreach ($row_color as $color) {
 		if (in_array($color['colorID'], $color_id)) {
 			$color_qty = $color_qty + $color['qty'];
+			$group_number_array[] = $color['group_number'];
 			$bicid_array[] = $color['BICID'];
+
+			// if(!in_array($color['BICID'], $bicid_array)){
+			// 	$bicid_array[] = $color['BICID'];
+			// }
 		}
 	}
-	foreach ($bicid_array as $bicid) {
-		$row_carton_n_nnw = $buyer_po_header->select_total_carton_and_nnw($_POST['invID'], $shipmentpriceID, $bicid);
+	foreach ($bicid_array as $bicidIndex => $bicid) {
+		$row_carton_n_nnw = $buyer_po_header->select_total_carton_and_nnw($_POST['invID'], $shipmentpriceID, $bicid, $group_number_array[$bicidIndex]);
 
 		foreach ($row_carton_n_nnw as $carton_n_nnw) {
 			$total_ctn = $total_ctn + $carton_n_nnw['total_ctn'];
@@ -63,7 +69,7 @@ if ($type == 'addRow') {
 		<td><input type="text" name="qty[]" class="form-control qty-<?= $INVCHID ?>" readonly></td>
 		<td>
 			<input type="number" name="unit_price[]" data-INVCHID="<?= $INVCHID ?>" class="form-control unit-price" oninput="calculateTotal(this, <?= $INVCHID ?>)">
-			<font color="red" class="valid_unit_price">*</font>
+			<font color="red" class="valid_unit_price"></font>
 		</td>
 		<td class="total-amount">0</td>
 		<td><input type="text" name="nnwctns[]" class="form-control nnwctns" readonly></td>

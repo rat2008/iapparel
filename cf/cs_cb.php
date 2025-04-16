@@ -156,12 +156,12 @@ class cs_cb
 		return $row;
 	}
 
-	public function select_total_carton_and_nnw($invID, $shipmentpriceID, $BICID)
+	public function select_total_carton_and_nnw($invID, $shipmentpriceID, $BICID, $group_number)
 	{
 		$query = "SELECT  sum(ch.total_ctn) as total_ctn, sum(ch.net_net_weight * ch.total_ctn) as total_nnw, cd.group_number, ch.weight_unitID
 			FROM `tblcarton_inv_payment_head` ch 
 			INNER JOIN tblcarton_inv_payment_detail cd ON cd.CIHID = ch.CIHID
-			WHERE ch.invID = $invID AND ch.del=0 AND ch.shipmentpriceID = $shipmentpriceID AND ch.BICID = $BICID AND cd.del=0 AND cd.group_number=1";
+			WHERE ch.invID = $invID AND ch.del=0 AND ch.shipmentpriceID = $shipmentpriceID AND ch.BICID = $BICID AND cd.del=0 AND cd.group_number= $group_number";
 
 		if ($this->test == "1") {
 			// echo "<pre>$query</pre>";

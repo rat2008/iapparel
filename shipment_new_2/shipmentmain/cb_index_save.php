@@ -143,6 +143,7 @@ if ($_POST) {
         ];
         $model_cost_detail->update($data);
     }
+    
     echo "<script>
         alert('Cost Breakdown Updated');
         window.location.href = 'buyer_inv.php?id=" . $ch_invID[0] . "&isBuyerPayment=true';

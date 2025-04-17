@@ -57,245 +57,14 @@ if (!empty($_POST)) {
 <body>
 	<div class="container p-3 mb-5">
 		<form id="order-form" action="cb_index_save.php" method="POST" onsubmit="return validateForm();">
+			<input type="hidden" name="delete_cost_head_id">
+			<input type="hidden" name="delete_cost_detail_id">
 			<div class="row mb-2">
 				<div class="col-md-12">
 					<button type="button" onclick="finalcheck()" class="btn btn-success">Save</button>
 				</div>
 			</div>
 			<div id="order-sections">
-				<input type="hidden" name="delete_cost_head_id" type="text">
-				<input type="hidden" name="delete_cost_detail_id" type="text">
-				<?php foreach ($row_buyer_po as $index => $buyer_po) {
-					$row_shipping_marking = $buyer_po_header->select_shipping_marking($_GET['invID'], $buyer_po['shipmentpriceID']);
-					$row_color = $buyer_po_header->select_po_color($_GET['invID'], $buyer_po['shipmentpriceID']);
-					$row_cost_head = $buyer_po_header->select_cost_head($_GET['invID'], $buyer_po['shipmentpriceID']);
-					$cost_head_colors = [];
-
-					if (!empty($row_cost_head)) {
-						$cost_head_colors = explode(',', $row_cost_head[0]['colorID']);
-					}
-
-					$shipping_marking = '';
-					if (isset($row_shipping_marking)) {
-						$shipping_marking = $row_shipping_marking[0]['shipping_marking'];
-					}
-				?>
-					<div class="card card-default order-section mb-2" data-section="<?= $buyer_po['shipmentpriceID'] ?>">
-						<div class="card-header">
-							<table>
-								<tr>
-									<th>PO#:</th>
-									<td><?= $buyer_po['GTN_buyerpo'] ?></td>
-									<th class="pl-2">ITEM/STYLE#:</th>
-									<td><?= $buyer_po['GTN_styleno'] ?></td>
-									<td class="pl-2"><button type="button" class="btn btn-sm btn-primary" onclick="addSection(this, <?= $INVCHID ?>,<?= $buyer_po['shipmentpriceID'] ?>)"><i class="fa-solid fa-plus "></i></button></td>
-									<!-- <td class="pl-2">
-										<button class="btn btn-success btn-sm ">Excel</button>
-									</td>
-									<td class="pl-2">
-										<button class="btn btn-warning btn-sm ">PDF</button>
-									</td> -->
-								</tr>
-							</table>
-						</div>
-						<div class="card-body" id="cost_head_<?= $INVCHID ?>">
-							<?php foreach ($row_cost_head as $cost_head) {
-								$color_qty = 0;
-								$color_id = [];
-								$INVCHID = $cost_head['INVCHID'];
-
-								$color_id = explode(',', $cost_head['colorID']);
-
-								foreach ($row_color as $color) {
-									if (in_array($color['colorID'], $color_id)) {
-										$color_qty = $color_qty + $color['qty'];
-									}
-								}
-
-								if (!empty($cost_head['item_desc'])) {
-									$shipping_marking = $cost_head['item_desc'];
-								}
-							?>
-								<div class="cost-head-section border p-2 mb-2">
-									<table class="mb-2'">
-										<tr>
-											<td>
-												<button type="button" class="btn btn-danger btn-xs pull-right" onclick="removeSection(this, <?= $INVCHID ?>)"><i class="fa-solid fa-trash"></i></button>
-											</td>
-											<td>
-												<strong>Color:</strong>
-											</td>
-											<td style="width:30%">
-												<select name="color_array[<?= $index ?>][]" data-INVCHID="<?= $INVCHID ?>" data-invID="<?= $_GET['invID'] ?>" data-shipmentpriceID="<?= $buyer_po['shipmentpriceID'] ?>" class="form-control color-select" readonly multiple>
-													<?php foreach ($row_color as $color_option) {
-														$selected_color = in_array($color_option['colorID'], explode(',', $cost_head['colorID'])) ? 'selected' : '' ?>
-														<option value="<?= $color_option['colorID'] ?>" <?= $selected_color ?>><?= $color_option['color'] ?></option>
-													<?php } ?>
-												</select>
-												<font color="red">*</font>
-												<br>
-												<font color="red" class="valid_color"></font>
-												<input type="hidden" name="color[]" class="color-string" value="<?= $cost_head['colorID'] ?>">
-												<input type="hidden" name="" class="ctn" value="0">
-												<input type="hidden" name="" class="nnw" value="0">
-											</td>
-											<td class="pl-2">
-												<strong>Description:</strong>
-											</td>
-											<td style="width:55%">
-												<input name="shipping_marking[]" class="form-control" value="<?= $shipping_marking ?>">
-												<input type="hidden" name="ch_new_head[]" value="n">
-												<input type="hidden" name="ch_invchid[]" value="<?= $cost_head['INVCHID'] ?>">
-												<input type="hidden" name="ch_invID[]" value="<?= $_GET['invID'] ?>">
-												<input type="hidden" name="ch_shipmentpriceID[]" value="<?= $buyer_po['shipmentpriceID'] ?>">
-											</td>
-										</tr>
-									</table>
-									<table class="table table-bordered cost_detail_row">
-										<thead>
-											<tr>
-												<th><button type="button" class="btn btn-success btn-xs" onclick="addRow(this, <?= $buyer_po['shipmentpriceID'] ?>,<?= $INVCHID ?>)">+</button></th>
-												<th>Item Description</th>
-												<th>Qty</th>
-												<th>Unit Price<font color="red">*</font>
-												</th>
-												<th>Total Amount</th>
-												<th>NNWCTNS (KG)</th>
-												<th>Total NNW (KG)</th>
-											</tr>
-										</thead>
-										<tbody class="items">
-											<?php
-											$row_cost_detail = $buyer_po_header->select_cost_detail($INVCHID);
-
-											foreach ($row_cost_detail as $cost_detail) { ?>
-												<tr>
-													<td>
-														<button type="button" class="btn btn-danger btn-xs" onclick="removeRow(this, <?= $cost_detail['ID'] ?>)"><i class="fa-solid fa-trash"></i></button>
-													</td>
-													<td><input type="text" name="item_description[]" class="form-control" value="<?= $cost_detail['item_desc'] ?>"></td>
-													<td><input type="text" name="qty[]" class="form-control qty-<?= $INVCHID ?>" value="<?= $color_qty ?>" readonly></td>
-													<td>
-														<input type="number" name="unit_price[]" class="form-control unit-price" data-INVCHID="<?= $INVCHID ?>" oninput="calculateTotal(this, <?= $INVCHID ?>)" value="<?= $cost_detail['unitprice'] ?>">
-														<font color="red" class="valid_unit_price"></font>
-													</td>
-													<td class="total-amount"><?= $color_qty * $cost_detail['unitprice'] ?></td>
-													<td><input type="text" name="nnwctns[]" class="form-control nnwctns" value="<?= $cost_detail['ctn_qty'] ?>" readonly></td>
-													<td>
-														<input type="text" name="total_nnw[]" class="form-control total_nnw" value="<?= $cost_detail['total_nnw'] ?>" readonly>
-														<input type="hidden" name="cd_new_detail[]" value="n">
-														<input type="hidden" name="cd_cost_detail_id[]" value="<?= $cost_detail['ID'] ?>">
-														<input type="hidden" name="cd_invchid[]" value="<?= $INVCHID ?>">
-														<input type="hidden" name="cd_shipmentpriceID[]" value="<?= $buyer_po['shipmentpriceID'] ?>">
-													</td>
-												</tr>
-											<?php
-											}
-											if (empty($row_cost_detail)) { ?>
-												<tr>
-													<td>
-														<button type="button" class="btn btn-danger btn-xs" onclick="removeRow(this)"><i class="fa-solid fa-trash"></i></button>
-													</td>
-													<td><input type="text" name="item_description[]" class="form-control"></td>
-													<td><input type="text" name="qty[]" class="form-control qty-<?= $INVCHID ?>" value="<?= $color_qty ?>" readonly></td>
-													<td>
-														<input type="number" name="unit_price[]" class="form-control unit-price" data-INVCHID="<?= $INVCHID ?>" oninput="calculateTotal(this, <?= $INVCHID ?>)">
-														<font color="red" class="valid_unit_price"></font>
-													</td>
-													<td class="total-amount">0</td>
-													<td><input type="text" name="nnwctns[]" class="form-control nnwctns" readonly></td>
-													<td>
-														<input type="text" name="total_nnw[]" class="form-control total_nnw" readonly>
-														<input type="hidden" name="cd_new_detail[]" value="y">
-														<input type="hidden" name="cd_cost_detail_id[]" value="">
-														<input type="hidden" name="cd_invchid[]" value="<?= $INVCHID ?>">
-														<input type="hidden" name="cd_shipmentpriceID[]" value="<?= $buyer_po['shipmentpriceID'] ?>">
-													</td>
-												</tr>
-											<?php } ?>
-										</tbody>
-									</table>
-								</div>
-								<?php $INVCHID++; ?>
-							<?php } ?>
-							<?php if (empty($row_cost_head)) { ?>
-								<div class="cost-head-section border p-2 mb-2">
-									<table class="mb-2'">
-										<tr>
-											<td>
-												<button type="button" class="btn btn-danger btn-xs pull-right" onclick="removeSection(this)"><i class="fa-solid fa-trash"></i></button>
-											</td>
-											<td>
-												<strong>Color:</strong>
-											</td>
-											<td style="width:30%">
-												<select name="color_array[<?= $index ?>][]" class="form-control color-select" data-INVCHID="<?= $last_cost_head_id ?>" data-invID="<?= $_GET['invID'] ?>" data-shipmentpriceID="<?= $buyer_po['shipmentpriceID'] ?>" readonly multiple>
-													<?php foreach ($row_color as $color) {
-														$select = in_array($color['colorID'], $cost_head_colors) ? 'selected' : '' ?>
-														<option value="<?= $color['colorID'] ?>" <?= $select ?>><?= $color['color'] ?></option>
-													<?php } ?>
-												</select>
-												<font color="red">*</font>
-												<br>
-												<font color="red" class="valid_color"></font>
-												<input type="hidden" name="color[]" class="color-string" value="<?= implode(',', $cost_head_colors) ?>">
-												<input type="hidden" name="" class="ctn" value="">
-												<input type="hidden" name="" class="nnw" value="">
-											</td>
-											<td class="pl-2">
-												<strong>Description:</strong>
-											</td>
-											<td style="width:55%">
-												<input name="shipping_marking[]" class="form-control" value="<?= $shipping_marking ?>">
-												<input type="hidden" name="ch_new_head[]" value="y">
-												<input type="hidden" name="ch_invchid[]" value="<?= $last_cost_head_id ?>">
-												<input type="hidden" name="ch_invID[]" value="<?= $_GET['invID'] ?>">
-												<input type="hidden" name="ch_shipmentpriceID[]" value="<?= $buyer_po['shipmentpriceID'] ?>">
-											</td>
-										</tr>
-									</table>
-									<table class="table table-bordered cost_detail_row">
-										<thead>
-											<tr>
-												<th><button type="button" class="btn btn-success btn-xs" onclick="addRow(this, <?= $buyer_po['shipmentpriceID'] ?>,<?= $last_cost_head_id ?>)">+</button></th>
-												<th>Item Description</th>
-												<th>Qty</th>
-												<th>Unit Price<font color="red">*</font>
-												</th>
-												<th>Total Amount</th>
-												<th>NNWCTNS (KG)</th>
-												<th>Total NNW (KG)</th>
-											</tr>
-										</thead>
-										<tbody class="items">
-											<tr>
-												<td>
-													<button type="button" class="btn btn-danger btn-xs" onclick="removeRow(this)"><i class="fa-solid fa-trash"></i></button>
-												</td>
-												<td><input type="text" name="item_description[]" class="form-control"></td>
-												<td><input type="text" name="qty[]" class="form-control qty-<?= $last_cost_head_id ?>" readonly></td>
-												<td>
-													<input type="number" name="unit_price[]" class="form-control unit-price" data-INVCHID="<?= $last_cost_head_id ?>" oninput="calculateTotal(this, <?= $last_cost_head_id ?>)">
-													<font color="red" class="valid_unit_price"></font>
-												</td>
-												<td class="total-amount">0</td>
-												<td><input type="text" name="nnwctns[]" class="form-control nnwctns" readonly></td>
-												<td>
-													<input type="text" name="total_nnw[]" class="form-control total_nnw" readonly>
-													<input type="hidden" name="cd_new_detail[]" value="y">
-													<input type="hidden" name="cd_cost_detail_id[]" value="">
-													<input type="hidden" name="cd_invchid[]" value="<?= $last_cost_head_id ?>">
-													<input type="hidden" name="cd_shipmentpriceID[]" value="<?= $buyer_po['shipmentpriceID'] ?>">
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-								<?php $last_cost_head_id++; ?>
-							<?php } ?>
-						</div>
-					</div>
-				<?php } ?>
 			</div>
 		</form>
 	</div>
@@ -304,8 +73,8 @@ if (!empty($_POST)) {
 </html>
 <script>
 	$(document).ready(function() {
+		loadSections();
 		$('.color-select').select2();
-
 	});
 
 	let last_invchid = <?= $last_cost_head_id ?>;
@@ -560,6 +329,24 @@ if (!empty($_POST)) {
 
 			// Reapply the current selection
 			currentSelect.val(currentSelected).trigger('change.select2');
+		});
+	}
+
+	function loadSections() {
+		$.ajax({
+			url: "../../ajax/ajax_cb.php",
+			method: "POST",
+			data: {
+				invID: <?= $invID ?>,
+				type: 'getSections'
+			},
+			success: function(data) {
+				$('#order-sections').html(data);
+				$('.color-select').select2();
+			},
+			error: function(error) {
+				console.error("Error loading sections:", error);
+			}
 		});
 	}
 

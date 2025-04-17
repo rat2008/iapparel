@@ -63,7 +63,7 @@ if ($type == 'addRow') {
 ?>
 	<tr>
 		<td>
-			<button type="button" class="btn btn-danger btn-xs" onclick="removeRow(this)">&times;</button>
+			<button type="button" class="btn btn-danger btn-xs" onclick="removeRow(this)"><i class="fa-solid fa-trash"></i></button>
 		</td>
 		<td><input type="text" name="item_description[]" class="form-control"></td>
 		<td><input type="text" name="qty[]" class="form-control qty-<?= $INVCHID ?>" readonly></td>
@@ -87,7 +87,7 @@ if ($type == 'addSection') { ?>
 		<table class="mb-2 cost-head-row">
 			<tr>
 				<td>
-					<button type="button" class="btn btn-danger btn-xs pull-right" onclick="removeSection(this)">&times;</button>
+					<button type="button" class="btn btn-danger btn-xs pull-right" onclick="removeSection(this)"><i class="fa-solid fa-trash"></i></button>
 				</td>
 				<td>
 					<strong>Color:</strong>
@@ -138,7 +138,7 @@ if ($type == 'addSection') { ?>
 				foreach ($row_cost_detail as $cost_detail) { ?>
 					<tr>
 						<td>
-							<button type="button" class="btn btn-danger btn-xs" onclick="removeRow(this)">&times;</button>
+							<button type="button" class="btn btn-danger btn-xs" onclick="removeRow(this)"><i class="fa-solid fa-trash"></i></button>
 						</td>
 						<td><input type="text" name="item_description[]" class="form-control" value="<?= $cost_detail['item_desc'] ?>"></td>
 						<td><input type="text" name="qty[]" class="form-control qty-<?= $INVCHID ?>" value="<?= $color_qty ?>" readonly></td>
@@ -161,7 +161,7 @@ if ($type == 'addSection') { ?>
 				if (empty($row_cost_detail)) { ?>
 					<tr>
 						<td>
-							<button type="button" class="btn btn-danger btn-xs" onclick="removeRow(this)">&times;</button>
+							<button type="button" class="btn btn-danger btn-xs" onclick="removeRow(this)"><i class="fa-solid fa-trash"></i></button>
 						</td>
 						<td><input type="text" name="item_description[]" class="form-control"></td>
 						<td><input type="text" name="qty[]" class="form-control qty-<?= $INVCHID ?>" value="<?= $color_qty ?>" readonly></td>

@@ -22,7 +22,7 @@ if ($_POST) {
     $item_description        = $_POST['item_description'];    // array of detail descriptions
     $unit_price              = $_POST['unit_price'];          // array of unit prices
     $qty                       = $_POST['qty'];                // array of quantities
-    $nnwctns                 = $_POST['nnwctns'];             // array of carton weights
+    $ctn_qty                 = $_POST['ctn_qty'];             // array of carton weights
     $total_nnw               = $_POST['total_nnw'];           // array of total weights
 
     $cd_new_detail           = $_POST['cd_new_detail'];       // array 'y' or 'n'
@@ -55,7 +55,7 @@ if ($_POST) {
                     $model_cost_detail->item_desc = $item_description[$cd_invchid_index];
                     $model_cost_detail->qty = $qty[$cd_invchid_index];
                     $model_cost_detail->unitprice = $unit_price[$cd_invchid_index];
-                    $model_cost_detail->ctn_qty = $nnwctns[$cd_invchid_index];
+                    $model_cost_detail->ctn_qty = $ctn_qty[$cd_invchid_index];
                     $model_cost_detail->total_nnw = $total_nnw[$cd_invchid_index];
 
                     $model_cost_detail->create();
@@ -84,7 +84,7 @@ if ($_POST) {
             $model_cost_detail->item_desc = $item_description[$cost_detail_index];
             $model_cost_detail->qty = $qty[$cost_detail_index];
             $model_cost_detail->unitprice = $unit_price[$cost_detail_index];
-            $model_cost_detail->ctn_qty = $nnwctns[$cost_detail_index];
+            $model_cost_detail->ctn_qty = $ctn_qty[$cost_detail_index];
             $model_cost_detail->total_nnw = $total_nnw[$cost_detail_index];
 
             $model_cost_detail->create();
@@ -96,7 +96,7 @@ if ($_POST) {
                 "item_desc" => $item_description[$cost_detail_index],
                 "qty" => $qty[$cost_detail_index],
                 "unitprice" => $unit_price[$cost_detail_index],
-                "ctn_qty" => $nnwctns[$cost_detail_index],
+                "ctn_qty" => $ctn_qty[$cost_detail_index],
                 "total_nnw" => $total_nnw[$cost_detail_index],
                 "del" => 0,
                 "delby" => null,
@@ -143,7 +143,7 @@ if ($_POST) {
         ];
         $model_cost_detail->update($data);
     }
-    
+
     echo "<script>
         alert('Cost Breakdown Updated');
         window.location.href = 'buyer_inv.php?id=" . $ch_invID[0] . "&isBuyerPayment=true';

@@ -202,7 +202,6 @@ function generateSection($isNew, $INVCHID, $shipmentpriceID, $invID)
                         <th>Unit Price<font color="red">*</font></th>
                         <th>Total Amount</th>
 						<th>Carton qty</th>
-						<th>NNW</th>
                         <th>NNW per carton(KG)</th>
                         <th>Total NNW (KG)</th>
                     </tr>
@@ -234,6 +233,10 @@ function generateRow($cost_detail, $INVCHID, $shipmentpriceID, $total_ctn, $tota
 	$unitprice = $isNew === 'y' ? '' : $cost_detail['unitprice'];
 	$ctn_qty = $isNew === 'y' ? '' : $cost_detail['ctn_qty'];
 	$nnw = $isNew === 'y' ? '' : $cost_detail['total_nnw'];
+	$nnw_pc = 0;
+	if ($total_nnw != 0 && $ctn_qty != 0) {
+		$nnw_pc = number_format($nnw / $ctn_qty, 2);
+	}
 
 	return '
         <tr>
@@ -247,9 +250,8 @@ function generateRow($cost_detail, $INVCHID, $shipmentpriceID, $total_ctn, $tota
                 <font color="red" class="valid_unit_price"></font>
             </td>
             <td class="total-amount">' . ($qty * $unitprice) . '</td>
-			<td class="carton-qty">' . $total_ctn . '</td>
-			<td class="display-total-nnw">' . $total_nnw . '</td>
-            <td><input type="text" name="nnwctns[]" class="form-control nnwctns" value="' . $ctn_qty . '" readonly></td>
+			<td><input type="text" name="ctn_qty[]" class="form-control carton-qty" value="' . $ctn_qty . '" readonly></td>
+            <td><input type="text" name="nnw_pc[]" class="form-control nnw_pc" value="' . $nnw_pc . '" readonly></td>
             <td>
                 <input type="text" name="total_nnw[]" class="form-control nnw" value="' . $nnw . '" readonly>
                 <input type="hidden" name="cd_new_detail[]" value="' . $isNew . '">

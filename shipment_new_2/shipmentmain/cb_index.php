@@ -283,23 +283,25 @@ if (!empty($_POST)) {
 				ratio_array[index] = parseFloat(item) / total_unit_price;
 			});
 
-			// $(this).find('.nnwctns').each(function(index) {
-			// 	let ratio = ratio_array[index] || 0;
-			// 	let ctn = ratio * total_ctn;
-			// 	$(this).val(ctn.toFixed(2));
-			// });
+			$(this).find('.carton-qty').each(function(index) {
+				let ratio = ratio_array[index] || 0;
+				let ctn_qty = ratio * total_ctn;
+				$(this).val(ctn_qty.toFixed(0));
+			});
 			$(this).find('.nnw').each(function(index) {
 				let ratio = ratio_array[index] || 0;
 				let nnw = ratio * total_nnw;
-				let ctn = nnw / total_ctn;
+				let ctn_qty = $(this).closest('tr').find('.carton-qty').val() || 0;
+				let ctn = 0;
 
-				$(this).closest('tr').find('.nnwctns').val(ctn.toFixed(2));
+				if (ctn_qty != 0) {
+					ctn = nnw / ctn_qty;
+				}
+
+				$(this).closest('tr').find('.nnw_pc').val(ctn.toFixed(2));
 
 				$(this).val(nnw.toFixed(2));
 
-			});
-			$(this).find('.carton-qty').each(function(index) {
-				$(this).html(total_ctn);
 			});
 			$(this).find('.display-total-nnw').each(function(index) {
 				$(this).html(total_nnw);

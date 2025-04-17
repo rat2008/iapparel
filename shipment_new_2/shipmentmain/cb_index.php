@@ -293,6 +293,9 @@ if (!empty($_POST)) {
 				let nnw = ratio * total_nnw;
 				$(this).val(nnw.toFixed(2));
 			});
+			$(this).find('.ctn-nnw').each(function(index) {
+				$(this).html(total_ctn + '/' + total_nnw);
+			});
 		});
 	}
 

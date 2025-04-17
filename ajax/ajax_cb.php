@@ -12,22 +12,13 @@ $buyer_po_header = new cs_cb($conn, $_misc);
 
 $type = $_POST['type'];
 
-// $shipmentpriceID = $_POST['shipmentpriceID'];
-// $sectionCount = $_POST['sectionCount'];
-// $INVCHID = $_POST['INVCHID'];
+
 $color_id =	[];
 $color_qty = 0;
 $i = 0;
 $row_buyer_po = $buyer_po_header->select_buyer_po($_POST['invID']);
 $last_cost_head_id = $handle_misc->funcMaxID('tblbuyer_invoice_payment_cost_head', "INVCHID") + 1;
 
-
-// $row_shipping_marking = $buyer_po_header->select_shipping_marking($_POST['invID'], $shipmentpriceID);
-$shipping_marking = '';
-
-if (isset($row_shipping_marking[0])) {
-	$shipping_marking = $row_shipping_marking[0]['shipping_marking'];
-}
 
 if ($type == 'getQty') {
 	$shipmentpriceID = $_POST['shipmentpriceID'];
@@ -126,13 +117,15 @@ function generateSections($invID)
 function generateSection($isNew, $INVCHID, $shipmentpriceID, $invID)
 {
 	global $buyer_po_header;
-	global $handle_misc;	
+	global $handle_misc;
 	global $conn;
 
 	$existing_color_ids = [];
 	$shipping_marking = '';
 	$existing_color_str = ''; // Default to an empty string
 	$isNewSection = 'n'; // Determine if this is a new section
+	$total_ctn = 0;
+	$total_nnw = 0;
 
 	$row_shipping_marking = $buyer_po_header->select_shipping_marking($invID, $shipmentpriceID);
 
@@ -160,6 +153,10 @@ function generateSection($isNew, $INVCHID, $shipmentpriceID, $invID)
 			$existing_color_str = $row_cost_head['colorID']; // Set to the colorID string if available
 		}
 	}
+	foreach ($row_cost_detail as $cost_detail) {
+		$total_ctn = $total_ctn + $cost_detail['ctn_qty'];
+		$total_nnw = $total_nnw + $cost_detail['total_nnw'];
+	}
 
 	$html = '
         <div class="cost-head-section border p-2 mb-2">
@@ -179,8 +176,8 @@ function generateSection($isNew, $INVCHID, $shipmentpriceID, $invID)
                         <br>
                         <font color="red" class="valid_color"></font>
                         <input type="hidden" name="color[]" class="color-string" value="' . $existing_color_str . '">
-                        <input type="hidden" name="" class="ctn" value="0">
-                        <input type="hidden" name="" class="nnw" value="0">
+                        <input type="text" name="" class="ctn" value="' . $total_ctn . '">
+                        <input type="text" name="" class="nnw" value="' . $total_nnw . '">
                     </td>
                     <td>
                         <strong>Description:</strong>
@@ -189,10 +186,10 @@ function generateSection($isNew, $INVCHID, $shipmentpriceID, $invID)
                         <input name="shipping_marking[]" class="form-control" value="' . $shipping_marking . '">
                     </td>
                     <td>
-                        <input type="text" name="ch_new_head[]" value="' . $isNewSection . '">
-                        <input type="text" name="ch_invchid[]" value="' . $INVCHID . '">
-                        <input type="text" name="ch_invID[]" value="' . $invID . '">
-                        <input type="text" name="ch_shipmentpriceID[]" value="' . $shipmentpriceID . '">
+                        <input type="hidden" name="ch_new_head[]" value="' . $isNewSection . '">
+                        <input type="hidden" name="ch_invchid[]" value="' . $INVCHID . '">
+                        <input type="hidden" name="ch_invID[]" value="' . $invID . '">
+                        <input type="hidden" name="ch_shipmentpriceID[]" value="' . $shipmentpriceID . '">
                     </td>
                 </tr>
             </table>
@@ -204,6 +201,7 @@ function generateSection($isNew, $INVCHID, $shipmentpriceID, $invID)
                         <th>Qty</th>
                         <th>Unit Price<font color="red">*</font></th>
                         <th>Total Amount</th>
+						<th>NNWCTNS/NNW</th>
                         <th>NNWCTNS (KG)</th>
                         <th>Total NNW (KG)</th>
                     </tr>
@@ -248,6 +246,7 @@ function generateRow($cost_detail, $INVCHID, $shipmentpriceID)
                 <font color="red" class="valid_unit_price"></font>
             </td>
             <td class="total-amount">' . ($qty * $unitprice) . '</td>
+			<td class="ctn-nnw">0</td>
             <td><input type="text" name="nnwctns[]" class="form-control nnwctns" value="' . $ctn_qty . '" readonly></td>
             <td>
                 <input type="text" name="total_nnw[]" class="form-control total_nnw" value="' . $total_nnw . '" readonly>

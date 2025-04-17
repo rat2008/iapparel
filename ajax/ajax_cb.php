@@ -60,7 +60,7 @@ if ($type == 'getSections') {
 }
 
 if ($type == 'addRow') {
-	echo generateRow([], $_POST['INVCHID'], $_POST['shipmentpriceID'], 0);
+	echo generateRow([], $_POST['INVCHID'], $_POST['shipmentpriceID'], 0, 0);
 }
 
 if ($type == 'addSection') {
@@ -177,7 +177,7 @@ function generateSection($isNew, $INVCHID, $shipmentpriceID, $invID)
                         <font color="red" class="valid_color"></font>
                         <input type="hidden" name="color[]" class="color-string" value="' . $existing_color_str . '">
                         <input type="hidden" name="" class="ctn" value="' . $total_ctn . '">
-                        <input type="hidden" name="" class="nnw" value="' . $total_nnw . '">
+                        <input type="hidden" name="" class="total_nnw" value="' . $total_nnw . '">
                     </td>
                     <td>
                         <strong>Description:</strong>
@@ -201,8 +201,9 @@ function generateSection($isNew, $INVCHID, $shipmentpriceID, $invID)
                         <th>Qty</th>
                         <th>Unit Price<font color="red">*</font></th>
                         <th>Total Amount</th>
-						<th>NNWCTNS/NNW</th>
-                        <th>NNWCTNS (KG)</th>
+						<th>Carton qty</th>
+						<th>NNW</th>
+                        <th>NNW per carton(KG)</th>
                         <th>Total NNW (KG)</th>
                     </tr>
                 </thead>
@@ -211,11 +212,11 @@ function generateSection($isNew, $INVCHID, $shipmentpriceID, $invID)
 	// Generate rows for each cost_detail
 	if (!empty($row_cost_detail)) {
 		foreach ($row_cost_detail as $cost_detail) {
-			$html .= generateRow($cost_detail, $INVCHID, $shipmentpriceID, $total_ctn . '/' . $total_nnw);
+			$html .= generateRow($cost_detail, $INVCHID, $shipmentpriceID, $total_ctn, $total_nnw);
 		}
 	} else {
 		// If no cost_detail records exist, generate one new row
-		$html .= generateRow([], $INVCHID, $shipmentpriceID, 0);
+		$html .= generateRow([], $INVCHID, $shipmentpriceID, $total_ctn, $total_nnw);
 	}
 
 	$html .= '</tbody></table></div>';
@@ -224,7 +225,7 @@ function generateSection($isNew, $INVCHID, $shipmentpriceID, $invID)
 }
 
 // Function to generate a row
-function generateRow($cost_detail, $INVCHID, $shipmentpriceID, $ctn_nnw)
+function generateRow($cost_detail, $INVCHID, $shipmentpriceID, $total_ctn, $total_nnw)
 {
 	$isNew = empty($cost_detail) ? 'y' : 'n';
 	$ID = $isNew === 'y' ? '' : $cost_detail['ID'];
@@ -232,7 +233,7 @@ function generateRow($cost_detail, $INVCHID, $shipmentpriceID, $ctn_nnw)
 	$qty = $isNew === 'y' ? '' : $cost_detail['qty'];
 	$unitprice = $isNew === 'y' ? '' : $cost_detail['unitprice'];
 	$ctn_qty = $isNew === 'y' ? '' : $cost_detail['ctn_qty'];
-	$total_nnw = $isNew === 'y' ? '' : $cost_detail['total_nnw'];
+	$nnw = $isNew === 'y' ? '' : $cost_detail['total_nnw'];
 
 	return '
         <tr>
@@ -246,10 +247,11 @@ function generateRow($cost_detail, $INVCHID, $shipmentpriceID, $ctn_nnw)
                 <font color="red" class="valid_unit_price"></font>
             </td>
             <td class="total-amount">' . ($qty * $unitprice) . '</td>
-			<td class="ctn-nnw">' . $ctn_nnw . '</td>
+			<td class="carton-qty">' . $total_ctn . '</td>
+			<td class="display-total-nnw">' . $total_nnw . '</td>
             <td><input type="text" name="nnwctns[]" class="form-control nnwctns" value="' . $ctn_qty . '" readonly></td>
             <td>
-                <input type="text" name="total_nnw[]" class="form-control total_nnw" value="' . $total_nnw . '" readonly>
+                <input type="text" name="total_nnw[]" class="form-control nnw" value="' . $nnw . '" readonly>
                 <input type="hidden" name="cd_new_detail[]" value="' . $isNew . '">
                 <input type="hidden" name="cd_cost_detail_id[]" value="' . $ID . '">
                 <input type="hidden" name="cd_invchid[]" value="' . $INVCHID . '">

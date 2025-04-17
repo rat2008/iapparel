@@ -236,7 +236,7 @@ if (!empty($_POST)) {
 					data = JSON.parse(data);
 					$('.qty-' + INVCHID).val(data['color_qty']);
 					obj.closest('td').find('.ctn').val(data['total_ctn']);
-					obj.closest('td').find('.nnw').val(data['total_nnw']);
+					obj.closest('td').find('.total_nnw').val(data['total_nnw']);
 				}
 			});
 		});
@@ -264,7 +264,7 @@ if (!empty($_POST)) {
 			let total_unit_price = 0;
 
 			total_ctn = $(this).closest('.cost-head-section').find('.ctn').val();
-			total_nnw = $(this).closest('.cost-head-section').find('.nnw').val();
+			total_nnw = $(this).closest('.cost-head-section').find('.total_nnw').val();
 			total_ctn = parseFloat(total_ctn);
 			total_nnw = parseFloat(total_nnw);
 
@@ -283,18 +283,26 @@ if (!empty($_POST)) {
 				ratio_array[index] = parseFloat(item) / total_unit_price;
 			});
 
-			$(this).find('.nnwctns').each(function(index) {
-				let ratio = ratio_array[index] || 0;
-				let ctn = ratio * total_ctn;
-				$(this).val(ctn.toFixed(2));
-			});
-			$(this).find('.total_nnw').each(function(index) {
+			// $(this).find('.nnwctns').each(function(index) {
+			// 	let ratio = ratio_array[index] || 0;
+			// 	let ctn = ratio * total_ctn;
+			// 	$(this).val(ctn.toFixed(2));
+			// });
+			$(this).find('.nnw').each(function(index) {
 				let ratio = ratio_array[index] || 0;
 				let nnw = ratio * total_nnw;
+				let ctn = nnw / total_ctn;
+
+				$(this).closest('tr').find('.nnwctns').val(ctn.toFixed(2));
+
 				$(this).val(nnw.toFixed(2));
+
 			});
-			$(this).find('.ctn-nnw').each(function(index) {
-				$(this).html(total_ctn + '/' + total_nnw);
+			$(this).find('.carton-qty').each(function(index) {
+				$(this).html(total_ctn);
+			});
+			$(this).find('.display-total-nnw').each(function(index) {
+				$(this).html(total_nnw);
 			});
 		});
 	}

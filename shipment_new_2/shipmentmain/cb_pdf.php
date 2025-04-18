@@ -87,7 +87,7 @@ foreach ($row_buyer_po as $buyer_po) {
                     <th class="text-center" colspan="2">QTY</th>
                     <th class="text-center">UNIT PRICE</th>
                     <th class="text-center">TOTAL AMOUNT</th>
-                    <th class="text-center">NNW / CTNS (KG)</th>
+                    <th class="text-center">NNW per carton(KG)</th>
                     <th class="text-center">TOTAL NNW (KG)</th>
                 </tr>
             </thead>
@@ -110,7 +110,7 @@ foreach ($row_buyer_po as $buyer_po) {
                 <td class="text-center">PCS</td>
                 <td class="text-center">' . number_format($cost_detail['unitprice'], 3) . '</td>
                 <td class="text-center">$' . number_format($amount, 2) . '</td>
-                <td class="text-center">' . number_format($cost_detail['ctn_qty'], 2) . '</td>
+                <td class="text-center">' . number_format($cost_detail['total_nnw']/$cost_detail['ctn_qty'], 2) . '</td>
                 <td class="text-center">' . number_format($cost_detail['total_nnw'], 2) . '</td>
             </tr>';
         }

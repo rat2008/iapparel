@@ -102,7 +102,7 @@ foreach ($row_buyer_po as $buyer_po) {
         $sheet->getActiveSheet()->mergeCells('B' . $row . ':C' . $row);
         $activeSheet->setCellValue('D' . $row, 'UNIT PRICE')
             ->setCellValue('E' . $row, "TOTAL \n AMOUNT")
-            ->setCellValue('F' . $row, "NNW /CTNS \n ( KG)")
+            ->setCellValue('F' . $row, "NNW per carton(KG)")
             ->setCellValue('G' . $row, "TOTAL NNW \n (KG)");
 
         $sheet->getActiveSheet()->getStyle('A' . $row . ':G' . $row)->applyFromArray($border_allborders);
@@ -130,7 +130,7 @@ foreach ($row_buyer_po as $buyer_po) {
                 ->setCellValue('C' . $row, 'PCS')
                 ->setCellValue('D' . $row, '$' . $cost_detail['unitprice'])
                 ->setCellValue('E' . $row, '$' . $amount)
-                ->setCellValue('F' . $row, '$' . $cost_detail['ctn_qty'])
+                ->setCellValue('F' . $row, '$' . number_format($cost_detail['total_nnw'] / $cost_detail['ctn_qty'], 2))
                 ->setCellValue('G' . $row, '$' . $cost_detail['total_nnw']);
 
             $sheet->getActiveSheet()->getStyle('B' . $row . ':G' . $row)->applyFromArray($style_center);

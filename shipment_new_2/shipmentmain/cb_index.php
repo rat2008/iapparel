@@ -74,7 +74,6 @@ if (!empty($_POST)) {
 <script>
 	$(document).ready(function() {
 		loadSections();
-		$('.color-select').select2();
 	});
 
 	let last_invchid = <?= $last_cost_head_id ?>;
@@ -356,6 +355,9 @@ if (!empty($_POST)) {
 			success: function(data) {
 				$('#order-sections').html(data);
 				$('.color-select').select2();
+				$('.color-select').each(function() {
+					updateColorOptions($(this));
+				});
 			},
 			error: function(error) {
 				console.error("Error loading sections:", error);

@@ -109,25 +109,23 @@ if (!empty($_POST)) {
 		// $('.color-select').select2();
 	}
 
-	async function addRow(btn, shipmentpriceID, INVCHID) {
-		try {
-			const response = await $.ajax({
-				url: "../../ajax/ajax_cb.php",
-				method: "POST",
-				data: {
-					INVCHID,
-					shipmentpriceID,
-					invID: <?= $invID ?>,
-					type: 'addRow'
-				}
-			});
-
-			$(btn).closest('table').find('.items').append(response);
-			updateAllColorSelects();
-			calculateAllNNWCTNS();
-		} catch (error) {
-			console.error("Error adding row:", error);
-		}
+	function addRow(btn, shipmentpriceID, INVCHID) {
+		$.ajax({
+			url: "../../ajax/ajax_cb.php",
+			method: "POST",
+			data: {
+				INVCHID,
+				shipmentpriceID,
+				invID: <?= $invID ?>,
+				type: 'addRow'
+			},
+			success: function(data) {
+				$(btn).closest('table').find('.items').append(data);
+				updateAllColorSelects();
+				calculateAllNNWCTNS();
+			}
+		});
+		
 	}
 
 	function removeSection(btn, INVCHID) {
@@ -202,7 +200,7 @@ if (!empty($_POST)) {
 				data = JSON.parse(data);
 				$('.qty-' + INVCHID).val(data['color_qty']);
 				obj.closest('td').find('.ctn').val(data['total_ctn']);
-				obj.closest('td').find('.nnw').val(data['total_nnw']);
+				obj.closest('td').find('.total_nnw').val(data['total_nnw']);
 				calculateAllTotal();
 				calculateAllNNWCTNS();
 			}
@@ -288,7 +286,7 @@ if (!empty($_POST)) {
 				$(this).val(ctn_qty.toFixed(0));
 			});
 			$(this).find('.nnw').each(function(index) {
-				let ratio = ratio_array[index] || 0;
+				let ratio = ratio_array[index] || 1;
 				let nnw = ratio * total_nnw;
 				let ctn_qty = $(this).closest('tr').find('.carton-qty').val() || 0;
 				let ctn = 0;

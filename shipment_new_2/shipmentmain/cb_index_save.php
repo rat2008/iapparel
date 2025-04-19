@@ -51,18 +51,37 @@ if ($_POST) {
             // Create cost details for the new cost head
             foreach ($cd_invchid as $cd_invchid_index => $invchid) {
                 if ($invchid == $temp_invchid) {
-                    $model_cost_detail->INVCHID = $model_cost_head->INVCHID;
-                    $model_cost_detail->item_desc = $item_description[$cd_invchid_index];
-                    $model_cost_detail->qty = $qty[$cd_invchid_index];
-                    $model_cost_detail->unitprice = $unit_price[$cd_invchid_index];
-                    $model_cost_detail->ctn_qty = $ctn_qty[$cd_invchid_index];
-                    $model_cost_detail->total_nnw = $total_nnw[$cd_invchid_index];
+                    if ($cd_new_detail[$cd_invchid_index] == 'y') {
+                        $model_cost_detail->ID = $cd_cost_detail_id[$cd_invchid_index];
+                        $model_cost_detail->INVCHID = $model_cost_head->INVCHID;
+                        $model_cost_detail->item_desc = $item_description[$cd_invchid_index];
+                        $model_cost_detail->qty = $qty[$cd_invchid_index];
+                        $model_cost_detail->unitprice = $unit_price[$cd_invchid_index];
+                        $model_cost_detail->ctn_qty = $ctn_qty[$cd_invchid_index];
+                        $model_cost_detail->total_nnw = $total_nnw[$cd_invchid_index];
 
-                    $model_cost_detail->create();
+                        $model_cost_detail->create();
+                    }
+                    if ($cd_new_detail[$cd_invchid_index] == 'n') {
+                        $data = [
+                            "ID" => $cd_cost_detail_id[$cd_invchid_index],             // required for WHERE condition
+                            "INVCHID" => $model_cost_head->INVCHID,
+                            "item_desc" => $item_description[$cd_invchid_index],
+                            "qty" => $qty[$cd_invchid_index],
+                            "unitprice" => $unit_price[$cd_invchid_index],
+                            "ctn_qty" => $ctn_qty[$cd_invchid_index],
+                            "total_nnw" => $total_nnw[$cd_invchid_index],
+                            "del" => 0,
+                            "delby" => null,
+                            "delDate" => null
+                        ];
+                        $model_cost_detail->update($data);
+                    }
                 }
             }
         } elseif ($isNew == 'n') {
             // Update existing cost head
+            $temp_invchid = $ch_invchid[$cost_head_index];
             $data = [
                 "INVCHID" => $ch_invchid[$cost_head_index],                 // required for WHERE condition
                 "shipmentpriceID" => $ch_shipmentpriceID[$cost_head_index],
@@ -73,36 +92,38 @@ if ($_POST) {
                 "delDate" => null
             ];
             $model_cost_head->update($data);
-        }
-    }
-
-    // Process cost details
-    foreach ($cd_new_detail as $cost_detail_index => $isNew) {
-        if ($isNew == 'y') {
-            // Create new cost detail
-            $model_cost_detail->INVCHID = $cd_invchid[$cost_detail_index];
-            $model_cost_detail->item_desc = $item_description[$cost_detail_index];
-            $model_cost_detail->qty = $qty[$cost_detail_index];
-            $model_cost_detail->unitprice = $unit_price[$cost_detail_index];
-            $model_cost_detail->ctn_qty = $ctn_qty[$cost_detail_index];
-            $model_cost_detail->total_nnw = $total_nnw[$cost_detail_index];
-
-            $model_cost_detail->create();
-        } elseif ($isNew == 'n') {
-            // Update existing cost detail
-            $data = [
-                "ID" => $cd_cost_detail_id[$cost_detail_index],             // required for WHERE condition
-                "INVCHID" => $cd_invchid[$cost_detail_index],
-                "item_desc" => $item_description[$cost_detail_index],
-                "qty" => $qty[$cost_detail_index],
-                "unitprice" => $unit_price[$cost_detail_index],
-                "ctn_qty" => $ctn_qty[$cost_detail_index],
-                "total_nnw" => $total_nnw[$cost_detail_index],
-                "del" => 0,
-                "delby" => null,
-                "delDate" => null
-            ];
-            $model_cost_detail->update($data);
+            
+            foreach ($cd_new_detail as $cost_detail_index => $isNew) {
+                if ($cd_invchid[$cost_detail_index] == $temp_invchid) {
+                    
+                    if ($isNew == 'y') {
+                        // Create new cost detail
+                        $model_cost_detail->INVCHID = $temp_invchid;
+                        $model_cost_detail->item_desc = $item_description[$cost_detail_index];
+                        $model_cost_detail->qty = $qty[$cost_detail_index];
+                        $model_cost_detail->unitprice = $unit_price[$cost_detail_index];
+                        $model_cost_detail->ctn_qty = $ctn_qty[$cost_detail_index];
+                        $model_cost_detail->total_nnw = $total_nnw[$cost_detail_index];
+                        
+                        $model_cost_detail->create();
+                    } elseif ($isNew == 'n') {
+                        // Update existing cost detail
+                        $data = [
+                            "ID" => $cd_cost_detail_id[$cost_detail_index],             // required for WHERE condition
+                            "INVCHID" => $temp_invchid,
+                            "item_desc" => $item_description[$cost_detail_index],
+                            "qty" => $qty[$cost_detail_index],
+                            "unitprice" => $unit_price[$cost_detail_index],
+                            "ctn_qty" => $ctn_qty[$cost_detail_index],
+                            "total_nnw" => $total_nnw[$cost_detail_index],
+                            "del" => 0,
+                            "delby" => null,
+                            "delDate" => null
+                        ];
+                        $model_cost_detail->update($data);
+                    }
+                }
+            }
         }
     }
 

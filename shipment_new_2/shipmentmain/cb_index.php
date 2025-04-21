@@ -76,7 +76,7 @@ if (!empty($_POST)) {
 		loadSections();
 	});
 
-	let last_invchid = <?= $last_cost_head_id ?>;
+	var last_invchid = 0;
 
 	function addSection(btn, INVCHID, shipmentpriceID) {
 		// sectionCount++;
@@ -356,6 +356,7 @@ if (!empty($_POST)) {
 				$('.color-select').each(function() {
 					updateColorOptions($(this));
 				});
+				last_invchid = $('#last_cost_head_id').val();
 			},
 			error: function(error) {
 				console.error("Error loading sections:", error);

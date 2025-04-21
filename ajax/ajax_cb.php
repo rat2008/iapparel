@@ -108,6 +108,7 @@ function generateSections($invID)
 
 		$html .= '</div></div>';
 	}
+	$html .= '<input type="hidden" id="last_cost_head_id" value="' . $last_cost_head_id . '">';
 
 	return $html;
 }
